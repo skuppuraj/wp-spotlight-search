@@ -66,7 +66,6 @@ function add_toolbar_items($admin_bar){
 	$form = '<div class="ui search">
               <div class="ui left icon input">
                 <input class="prompt" type="text" placeholder="Search">
-                <i class="github icon"></i>
               </div>
             </div>
             ';

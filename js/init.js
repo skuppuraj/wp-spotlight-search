@@ -19,10 +19,11 @@ jQuery(document).ready(function() {
       .search({
         source: wp_spotlite_full_menu,
         type          : 'category',
-        fullTextSearch: false
-        // searchFields   : [
-        //       'title'
-        //     ],
+        fullTextSearch: false,
+        searchFields   : [
+              'title',
+              'category'
+            ],
 
         // fields: {
         //           title   : 'name',
