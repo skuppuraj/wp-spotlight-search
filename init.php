@@ -21,42 +21,35 @@ endif;
 add_action('admin_bar_menu', 'add_toolbar_items', 9999);
 add_action('admin_head', 'printConnectionModalOpenScript');
 function printConnectionModalOpenScript(){
-     global $submenu, $menu;
-     $full = array();
+    global $submenu, $menu;
+    $full = array();
     $join = array();
-     // $full1 = array();
-     foreach ($menu as $key => $value) {
+    foreach ($menu as $key => $value) {
         if (!empty($submenu[$value[2]])) {
-            foreach ($submenu[$value[2]] as $k => $v) {
-                $temp = array();
-                $temp1 = array();
-                $temp['title']= $v[0];
-                $temp['url']= $v[2];
-                $temp['parent_url'] = $value[2];
-                $temp['category'] = $value[0];
-                // $temp1 = $temp;
-                $html_url_parts = pathinfo( $temp['url']);
-                $parent_url_parts = pathinfo( $temp['parent_url']);
-                if ((empty($html_url_parts['extension']) && empty($parent_url_parts['extension']))) {
-                    $temp['url'] = 'admin.php?page='. $temp['url'];
-                }elseif (empty($html_url_parts['extension']) && ( !empty($parent_url_parts['extension']) && $parent_url_parts['extension'] == 'php')){
-                    $temp['url'] = $temp['parent_url'].'?page='.$temp['url'];
-                }elseif (empty($html_url_parts['extension']) && ( !empty($parent_url_parts['extension']))) {
-                    $temp['url'] = $temp['parent_url'].'&'.$temp['url'];
-                }
-                $temp1['name'] = $value[0];
-                $temp1['name'] = $value[0];
-                // $full[$value[0]]['name'] = $value[0]; 
-                // $full[$value[0]]['results'][] = $temp; 
-                array_push($full, $temp);
-                // array_push($full1, $temp1);
+        foreach ($submenu[$value[2]] as $k => $v) {
+            $temp = array();
+            $temp1 = array();
+            $temp['title']= $v[0];
+            $temp['url']= $v[2];
+            $temp['parent_url'] = $value[2];
+            $temp['category'] = $value[0];
+            $html_url_parts = pathinfo( $temp['url']);
+            $parent_url_parts = pathinfo( $temp['parent_url']);
+            if ((empty($html_url_parts['extension']) && empty($parent_url_parts['extension']))) {
+                $temp['url'] = 'admin.php?page='. $temp['url'];
+            }elseif (empty($html_url_parts['extension']) && ( !empty($parent_url_parts['extension']) && $parent_url_parts['extension'] == 'php')){
+                $temp['url'] = $temp['parent_url'].'?page='.$temp['url'];
+            }elseif (empty($html_url_parts['extension']) && ( !empty($parent_url_parts['extension']))) {
+                $temp['url'] = $temp['parent_url'].'&'.$temp['url'];
             }
+            $temp1['name'] = $value[0];
+            $temp1['name'] = $value[0];
+            array_push($full, $temp);
+        }
         }
    
     }
-    // $join['results'] = $full;
     $join = $full;
-    // file_put_contents(dirname(__FILE__)."/__debugger1.php", var_export($join,1)."\n<br><br>\n",FILE_APPEND );
     ob_start()
     ?>
     <script type="text/javascript">
