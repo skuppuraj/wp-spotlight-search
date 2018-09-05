@@ -70,10 +70,14 @@ function printConnectionModalOpenScript(){
                 }
                 array_push($full, $temp);
             }
-        }elseif(!empty($value[0]) && !empty($home_url_part['extension'])){
+        }elseif(!empty($value[0])){
             $temp = array();
             $temp['title']= $value[0];
-            $temp['url']= $value[2];
+            if (empty($parent_url_parts['extension'])) {
+                $temp['url'] = 'admin.php?page='. $value[2];  
+            }else{
+                $temp['url']= $value[2];
+            }
             $temp['category'] = $value[0];
             array_push($full, $temp);
         }
