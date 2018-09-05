@@ -21,35 +21,60 @@ endif;
 add_action('admin_bar_menu', 'add_toolbar_items', 9999);
 add_action('admin_head', 'printConnectionModalOpenScript');
 function printConnectionModalOpenScript(){
-    global $submenu, $menu;
+    global $submenu, $menu, $wp_admin_bar, $wpdb;
+    $post_types = get_post_types('', 'object');
+    $all_post_types = array();
+    $available_post_types = array();
+    foreach ($post_types as $key => $post) {
+        if ($key == 'attachment' || $post->show_in_menu == false) {
+            continue;
+        }
+        $post_temp = array();
+        if ($key == 'shop_order') {
+            $post_content = $wpdb->get_results("select ID,post_title,post_type from $wpdb->posts where post_type = '$key'", ARRAY_A);
+        }else{
+            $post_content = $wpdb->get_results("select ID,post_title,post_type from $wpdb->posts where post_status='publish' AND post_type = '$key'", ARRAY_A);   
+        }
+        foreach ($post_content as $resultKey => $content) {
+            $post_temp['type'] = $key;
+            $post_temp['category'] = $post->label;
+            if ($key == 'shop_order') {
+                $post_temp['title'] = $content['ID'];                
+            }else{
+                $post_temp['title'] = $content['post_title'];
+            }
+            $post_temp['url']= 'post.php?post='.$content['ID'].'&action=edit';
+            array_push($all_post_types, $post_temp);
+        }
+
+    }
     $full = array();
     $join = array();
     foreach ($menu as $key => $value) {
         if (!empty($submenu[$value[2]])) {
-        foreach ($submenu[$value[2]] as $k => $v) {
-            $temp = array();
-            $temp1 = array();
-            $temp['title']= $v[0];
-            $temp['url']= $v[2];
-            $temp['parent_url'] = $value[2];
-            $temp['category'] = $value[0];
-            $html_url_parts = pathinfo( $temp['url']);
-            $parent_url_parts = pathinfo( $temp['parent_url']);
-            if ((empty($html_url_parts['extension']) && empty($parent_url_parts['extension']))) {
-                $temp['url'] = 'admin.php?page='. $temp['url'];
-            }elseif (empty($html_url_parts['extension']) && ( !empty($parent_url_parts['extension']) && $parent_url_parts['extension'] == 'php')){
-                $temp['url'] = $temp['parent_url'].'?page='.$temp['url'];
-            }elseif (empty($html_url_parts['extension']) && ( !empty($parent_url_parts['extension']))) {
-                $temp['url'] = $temp['parent_url'].'&'.$temp['url'];
+            foreach ($submenu[$value[2]] as $k => $v) {
+                $temp = array();
+                $temp1 = array();
+                $temp['title']= $v[0];
+                $temp['url']= $v[2];
+                $temp['parent_url'] = $value[2];
+                $temp['category'] = $value[0];
+                $html_url_parts = pathinfo( $temp['url']);
+                $parent_url_parts = pathinfo( $temp['parent_url']);
+                if ((empty($html_url_parts['extension']) && empty($parent_url_parts['extension']))) {
+                    $temp['url'] = 'admin.php?page='. $temp['url'];
+                }elseif (empty($html_url_parts['extension']) && ( !empty($parent_url_parts['extension']) && $parent_url_parts['extension'] == 'php')){
+                    $temp['url'] = $temp['parent_url'].'?page='.$temp['url'];
+                }elseif (empty($html_url_parts['extension']) && ( !empty($parent_url_parts['extension']))) {
+                    $temp['url'] = $temp['parent_url'].'&'.$temp['url'];
+                }
+                array_push($full, $temp);
             }
-            $temp1['name'] = $value[0];
-            $temp1['name'] = $value[0];
-            array_push($full, $temp);
-        }
         }
    
     }
     $join = $full;
+    $join = array_merge($join,$all_post_types);
     ob_start()
     ?>
     <script type="text/javascript">
@@ -63,7 +88,7 @@ function printConnectionModalOpenScript(){
     print $content;
 }
 function add_toolbar_items($admin_bar){
-	$form = '<div class="ui search">
+	$form = '<div class="ui search focus">
               <div class="ui left icon input">
                 <input class="prompt" type="text" placeholder="Search">
               </div>
