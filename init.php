@@ -51,10 +51,10 @@ function printConnectionModalOpenScript(){
     $full = array();
     $join = array();
     foreach ($menu as $key => $value) {
+        $home_url_part = pathinfo( $value[2]);
         if (!empty($submenu[$value[2]])) {
             foreach ($submenu[$value[2]] as $k => $v) {
                 $temp = array();
-                $temp1 = array();
                 $temp['title']= $v[0];
                 $temp['url']= $v[2];
                 $temp['parent_url'] = $value[2];
@@ -70,6 +70,12 @@ function printConnectionModalOpenScript(){
                 }
                 array_push($full, $temp);
             }
+        }elseif(!empty($value[0]) && !empty($home_url_part['extension'])){
+            $temp = array();
+            $temp['title']= $value[0];
+            $temp['url']= $value[2];
+            $temp['category'] = $value[0];
+            array_push($full, $temp);
         }
    
     }
