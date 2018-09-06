@@ -9,7 +9,7 @@ Author URI: http://kuppurajs.com
 
 */
 
-
+define('WP_SPOTLITE_SEARCH_NAME', 'wp-spotlite-search');
 if (!function_exists('debug_admin_menus')):
 function debug_admin_menus() {
     global $submenu, $menu, $pagenow, $kuppu, $skuppu;
@@ -114,48 +114,82 @@ function wp_soptlite_add_toolbar_items($admin_bar){
    
 }
 
-function my_enqueue($hook) {
+function wp_spotlite_enqueue($hook) {
 
-    wp_enqueue_script( 'my_custom_script', plugin_dir_url( __FILE__ ) . 'js/init.js' );
-    wp_enqueue_script( 'my_sematic_js', plugin_dir_url( __FILE__ ) . 'js/semantic.min.js' );
-    wp_enqueue_style( 'my_sematic_css', plugin_dir_url( __FILE__ ) . 'css/semantic.min.css' );
+    wp_enqueue_script( 'my_custom_script', plugin_dir_url( __FILE__ ) . 'assets/js/init.js' );
+    wp_enqueue_script( 'my_sematic_js', plugin_dir_url( __FILE__ ) . 'assets/js/semantic.min.js' );
+    wp_enqueue_style( 'my_sematic_css', plugin_dir_url( __FILE__ ) . 'assets/css/semantic.min.css' );
+    wp_enqueue_style( 'wp_spotlite_setting_css', plugin_dir_url( __FILE__ ) . 'assets/css/settings.css' );
     wp_localize_script( 'my_custom_script', 'my_ajax_object',
             array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 }
-add_action( 'admin_enqueue_scripts', 'my_enqueue' );
+add_action( 'admin_enqueue_scripts', 'wp_spotlite_enqueue' );
 
-add_action( 'wp_ajax_post_love_add_love', 'post_love_add_love' );
+add_action('admin_menu', 'wp_spotlite_menu');
 
-function post_love_add_love() {
-	global $submenu, $menu, $pagenow;
+function wp_spotlite_menu(){
+    add_menu_page('WP Spotlight Setting', 'WP Spotlight', 'manage_options', 'wp_spotlite_menu', 'wp_spotlite_menu_page');
+}
 
-	$t = array('total_count' => 1, 'incomplete_results' => false, 'items' => array('name'=> 'dddd', 'html_url' => 'https://github.com/SimplesGroup'));
-	$t = json_encode($t);
-	$full = array();
-	foreach ($menu as $key => $value) {
-    	if (!empty($submenu[$value[2]])) {
-    		foreach ($submenu[$value[2]] as $k => $v) {
-    			$temp['name']= $v[0];
-    			$temp['html_url']= $v[2];
-    			array_push($full, $temp);
-    		}
-    	}
-   
+function wp_spotlite_menu_page(){
+    wp_spotlite_save_settings($_POST);
+    require_once dirname( __FILE__ ).'/admin/view/settings.php';
+}
+
+function get_searchabel_post_types(){
+    $post_types = get_post_types('', 'object');
+    $searchabel_post_type = array();
+    foreach ($post_types as $key => $post) {
+        if ($key == 'attachment' || $post->show_in_menu == false) {
+            continue;
+        }
+        $post_tmep = array();
+        $post_tmep['type'] = $key;
+        $post_tmep['label'] = $post->label;
+        array_push($searchabel_post_type, $post_tmep);
+    }
+    return $searchabel_post_type;
+}
+
+function get_searchabel_post_types_checkbox(){
+    $searchabel_post_type = get_searchabel_post_types();
+    $response = '';
+    $wp_spotlite_settings = wp_spotlite_search_include_options();
+    foreach ($searchabel_post_type as $key => $value) {
+        $type = $value['type'];
+        $label = $value['label'];
+        $selected = '';
+        if ($wp_spotlite_settings != false && in_array($type, $wp_spotlite_settings)) {
+            $selected = 'checked';
+        }
+        $response .= "<label class='wp-spotlite-settings-checkbox'> <input type='checkbox' value='".$type."' name='search_include_options[]' $selected /> $label </label> <br>";
     }
 
-// 	$t ='{
-//   "items": [
-//     {
-//       "name": "kuppurajs.com",
-//       "private": false,
-//       "html_url": "https://github.com/skuppuraj/kuppurajs.com"
-//     }
-//   ]
-// }
-// ';
+    return $response;
+}
 
-file_put_contents(dirname(__FILE__)."/__debugger1.php", var_export($full,1)."\n<br><br>\n",FILE_APPEND );
-	echo $t;
-	wp_die(); 
+function wp_spotlite_save_settings($data){
+    if (empty($data['search_include_options'])) {
+        return false;
+    }
+    $settings['search_include_options'] = $data['search_include_options'];
+    update_option('wp_spotlite_setting', serialize($settings));
+}
 
+function wp_spotlite_get_settings(){
+    $wp_spotlite_setting = get_option('wp_spotlite_setting');
+    if (empty($wp_spotlite_setting)) {
+        return false;
+    }
+
+    return unserialize($wp_spotlite_setting);
+
+}
+
+function wp_spotlite_search_include_options(){
+    $wp_spotlite_setting = wp_spotlite_get_settings();
+    if(empty($wp_spotlite_setting['search_include_options'])) {
+        return false;
+    }
+    return $wp_spotlite_setting['search_include_options'];
 }
