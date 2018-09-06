@@ -26,7 +26,7 @@ function printConnectionModalOpenScript(){
     $all_post_types = array();
     $available_post_types = array();
     foreach ($post_types as $key => $post) {
-        if ($key == 'attachment' || $post->show_in_menu == false) {
+        if ($key == 'attachment' || ($post->show_in_menu == false && $post->public == false)) {
             continue;
         }
         $post_temp = array();
@@ -140,7 +140,7 @@ function get_searchabel_post_types(){
     $post_types = get_post_types('', 'object');
     $searchabel_post_type = array();
     foreach ($post_types as $key => $post) {
-        if ($key == 'attachment' || $post->show_in_menu == false) {
+        if ($key == 'attachment' || ($post->show_in_menu == false && $post->public == false)) {
             continue;
         }
         $post_tmep = array();
