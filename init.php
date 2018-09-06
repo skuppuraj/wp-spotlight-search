@@ -18,7 +18,7 @@ function debug_admin_menus() {
 add_action( 'admin_footer', 'debug_admin_menus' );
 endif;
 
-add_action('admin_bar_menu', 'add_toolbar_items', 9999);
+add_action('admin_bar_menu', 'wp_soptlite_add_toolbar_items', 9999);
 add_action('admin_head', 'printConnectionModalOpenScript');
 function printConnectionModalOpenScript(){
     global $submenu, $menu, $wp_admin_bar, $wpdb;
@@ -97,7 +97,7 @@ function printConnectionModalOpenScript(){
     $content = ob_get_clean();
     print $content;
 }
-function add_toolbar_items($admin_bar){
+function wp_soptlite_add_toolbar_items($admin_bar){
 	$form = '<div class="ui search focus">
               <div class="ui left icon input">
                 <input class="prompt" type="text" placeholder="Search">
