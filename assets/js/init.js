@@ -24,7 +24,7 @@ jQuery(document).ready(function() {
               'title',
               'category'
             ],
-        maxResults : 20
+        maxResults : 10
 
         // fields: {
         //           title   : 'name',

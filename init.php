@@ -18,7 +18,8 @@ function debug_admin_menus() {
 add_action( 'admin_footer', 'debug_admin_menus' );
 endif;
 
-add_action('admin_bar_menu', 'wp_soptlite_add_toolbar_items', 9999);
+add_action('wp_before_admin_bar_render', 'wp_soptlite_add_toolbar_items', 999999999);
+// add_action('admin_init', 'wp_soptlite_admin_init', 999999999);
 add_action('admin_head', 'printConnectionModalOpenScript');
 function printConnectionModalOpenScript(){
     global $submenu, $menu, $wp_admin_bar, $wpdb;
@@ -98,17 +99,18 @@ function printConnectionModalOpenScript(){
     print $content;
 }
 function wp_soptlite_add_toolbar_items($admin_bar){
-	$form = '<div class="ui search focus">
-              <div class="ui left icon input">
+    global $wp_admin_bar;
+	$form = '<div class="ui search focus" style="background-color: rgba(0, 0, 0, 0);position: relative;">
+              <div class="ui left icon input" >
                 <input class="prompt" type="text" placeholder="Search">
               </div>
             </div>
             ';
-    $admin_bar->add_menu( array(
-        'id'    => 'my-item',
+    $wp_admin_bar->add_menu( array(
+        'id'    => 'wp-spotlite-search',
         'title' => $form,
         'meta'  => array(
-            'title' => __('My Item'),            
+            'title' => __('WP Spotlight')            
         ),
     ));
    
