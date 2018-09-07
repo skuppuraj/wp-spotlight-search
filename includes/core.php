@@ -106,8 +106,9 @@ class WP_Spotlite_Core{
 		global $wpdb;
 		$all_post_types = array();
 		$post_types = get_post_types('', 'object');
+		$wp_spotlite_setting = WP_Spotlite_Core::wp_spotlite_search_include_options();
 		foreach ($post_types as $key => $post) {
-		    if ($key == 'attachment' || ($post->show_in_menu == false && $post->public == false)) {
+		    if (!in_array($key, $wp_spotlite_setting) || $key == 'attachment' || ($post->show_in_menu == false && $post->public == false)) {
 		        continue;
 		    }
 		    $post_temp = array();

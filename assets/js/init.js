@@ -24,7 +24,8 @@ jQuery(document).ready(function() {
               'title',
               'category'
             ],
-        maxResults : 10
+        maxResults : 10,
+        selectFirstResult: true
 
         // fields: {
         //           title   : 'name',
