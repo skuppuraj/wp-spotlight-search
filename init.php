@@ -102,7 +102,7 @@ function wp_soptlite_add_toolbar_items($admin_bar){
     global $wp_admin_bar;
 	$form = '<div class="ui search focus" style="background-color: rgba(0, 0, 0, 0);position: relative;">
               <div class="ui left icon input" >
-                <input class="prompt" type="text" placeholder="Search">
+                <input class="prompt" type="text" placeholder="Search" autofocus>
               </div>
             </div>
             ';
