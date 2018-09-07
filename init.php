@@ -8,6 +8,11 @@ Version: 1.0.0
 Author URI: http://kuppurajs.com
 
 */
+
+if ( ! defined( 'WPINC' ) ) {
+    die;
+}
+
 class WP_Spotlite {
 
     public function __construct(){
@@ -85,6 +90,10 @@ class WP_Spotlite {
     }
 
     public function admin_notices(){
+        $settings = WP_Spotlite_Core::wp_spotlite_get_settings();
+        if ($settings != false) {
+            return false;
+        }
         ?>
            <div class="notice notice-success is-dismissible">
                <p><?php _e( 'Thank you for installing the WP Spotlite Search! you can modify the search option <a href="admin.php?page=wp_spotlite_menu_page">here</a>', WP_SPOTLITE_SEARCH_NAME ); ?></p>
