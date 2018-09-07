@@ -121,7 +121,18 @@ class WP_Spotlite_Core{
 		        $post_temp['type'] = $key;
 		        $post_temp['category'] = $post->label;
 		        if ($key == 'shop_order') {
-		            $post_temp['title'] = $content['ID'];                
+		            $post_temp['title'] = $content['ID']; 
+		            $meta = get_post_meta($content['ID']);
+		            $_order_currency = $meta['_order_currency'][0];
+		            $_order_total = $meta['_order_total'][0];
+		            $post_temp['price'] = $_order_currency.' '.$_order_total;
+		        }elseif($key == 'product'){
+		            $post_temp['title'] = $content['post_title'];
+		            $meta = get_post_meta($content['ID']);
+		            $_price = $meta['_price'][0];
+		            $currency = get_option('woocommerce_currency');
+		            $post_temp['price'] = $currency.' '.$_price;
+
 		        }else{
 		            $post_temp['title'] = $content['post_title'];
 		        }
