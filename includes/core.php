@@ -120,8 +120,9 @@ class WP_Spotlite_Core{
 		    foreach ($post_content as $resultKey => $content) {
 		        $post_temp['type'] = $key;
 		        $post_temp['category'] = $post->label;
+		        $post_temp['ID'] = $content['ID']; 
 		        if ($key == 'shop_order') {
-		            $post_temp['title'] = $content['ID']; 
+		            $post_temp['title'] = $content['post_title']; 
 		            $meta = get_post_meta($content['ID']);
 		            $_order_currency = $meta['_order_currency'][0];
 		            $_order_total = $meta['_order_total'][0];

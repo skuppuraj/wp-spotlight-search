@@ -7,7 +7,8 @@ jQuery(document).ready(function() {
         fullTextSearch: true,
         searchFields   : [
               'title',
-              'category'
+              'category',
+              'ID'
             ],
         maxResults : 10,
       })
