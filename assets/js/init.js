@@ -19,13 +19,13 @@ jQuery(document).ready(function() {
       .search({
         source: wp_spotlite_full_menu,
         type          : 'category',
+        selectFirstResult: true,
         fullTextSearch: true,
         searchFields   : [
               'title',
               'category'
             ],
         maxResults : 10,
-        selectFirstResult: true
 
         // fields: {
         //           title   : 'name',
