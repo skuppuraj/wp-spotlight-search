@@ -10,13 +10,6 @@ Author URI: http://kuppurajs.com
 */
 
 define('WP_SPOTLITE_SEARCH_NAME', 'wp-spotlite-search');
-if (!function_exists('debug_admin_menus')):
-function debug_admin_menus() {
-    global $submenu, $menu, $pagenow, $kuppu, $skuppu;
-
-}
-add_action( 'admin_footer', 'debug_admin_menus' );
-endif;
 
 add_action('wp_before_admin_bar_render', 'wp_soptlite_add_toolbar_items', 999999999);
 // add_action('admin_init', 'wp_soptlite_admin_init', 999999999);
