@@ -5,7 +5,7 @@
 			<tr>
 				<th scope="row"><?php _e( 'Search options', WP_SPOTLITE_SEARCH_NAME ); ?></th>
 				<td>
-					<?php echo get_searchabel_post_types_checkbox();?>
+					<?php echo WP_Spotlite_Core::get_searchabel_post_types_checkbox();?>
 				</td>
 			</tr>
 		</table>
