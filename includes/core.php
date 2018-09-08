@@ -4,6 +4,7 @@ class WP_Spotlite_Core{
 
 	public static function get_searchabel_post_types_checkbox(){
 		$other_types[0] = array('type'=>'users', 'label' => 'Users');
+		$other_types[0] = array('type'=>'comments', 'label' => 'Comments');
 	    $searchabel_post_type = WP_Spotlite_Core::get_searchabel_post_types();
 	    $response = '';
 	    $wp_spotlite_settings = WP_Spotlite_Core::wp_spotlite_search_include_options();
@@ -62,6 +63,8 @@ class WP_Spotlite_Core{
 		$searchabel_menu = WP_Spotlite_Core::get_searchable_menu();
 		$users = WP_Spotlite_Core::get_all_users();
 		$final_response = array_merge($final_response,$users);
+		$comments = WP_Spotlite_Core::get_all_comments();
+		$final_response = array_merge($final_response,$comments);
 		$join = array_merge($final_response,$searchabel_menu);
 
 		return $join;
@@ -167,6 +170,26 @@ class WP_Spotlite_Core{
 			array_push($user_results, $user_temp);
 		}
 		return $user_results;
+	}
+
+	public static function get_all_comments(){
+		$comment_results = array();
+		$wp_spotlite_setting = WP_Spotlite_Core::wp_spotlite_search_include_options();
+		if (!in_array('comments', $wp_spotlite_setting)) {
+			return $comment_results;
+		}
+		$comments = get_comments();
+		foreach ($comments as $key => $value) {
+			$comment_temp = array();
+			$comment_temp['ID'] = $value->comment_ID;
+			$comment_temp['title'] = $value->comment_content;
+			$comment_temp['price'] = $value->comment_author_email;
+			$comment_temp['category'] = 'Comments';
+			$comment_temp['url'] = 'comment.php?action=editcomment&c='.$value->comment_ID;
+			array_push($comment_results, $comment_temp);
+		}
+
+		return $comment_results;
 	}
 
 	public static function wp_spotlite_save_settings($data){
