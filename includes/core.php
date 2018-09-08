@@ -1,22 +1,22 @@
 <?php
 
-class WP_Spotlite_Core{
+class WP_Spotlight_Core{
 
 	public static function get_searchabel_post_types_checkbox(){
 		$other_types[0] = array('type'=>'users', 'label' => 'Users');
-		$other_types[0] = array('type'=>'comments', 'label' => 'Comments');
-	    $searchabel_post_type = WP_Spotlite_Core::get_searchabel_post_types();
+		$other_types[1] = array('type'=>'comments', 'label' => 'Comments');
+	    $searchabel_post_type = WP_Spotlight_Core::get_searchabel_post_types();
 	    $response = '';
-	    $wp_spotlite_settings = WP_Spotlite_Core::wp_spotlite_search_include_options();
+	    $wp_spotlight_settings = WP_Spotlight_Core::wp_spotlight_search_include_options();
 	    $searchabel_post_type = array_merge($searchabel_post_type, $other_types);
 	    foreach ($searchabel_post_type as $key => $value) {
 	        $type = $value['type'];
 	        $label = $value['label'];
 	        $selected = '';
-	        if ($wp_spotlite_settings != false && in_array($type, $wp_spotlite_settings)) {
+	        if ($wp_spotlight_settings != false && in_array($type, $wp_spotlight_settings)) {
 	            $selected = 'checked';
 	        }
-	        $response .= "<label class='wp-spotlite-settings-checkbox'> <input type='checkbox' value='".$type."' name='search_include_options[]' $selected /> $label </label> <br>";
+	        $response .= "<label class='wp-spotlight-settings-checkbox'> <input type='checkbox' value='".$type."' name='search_include_options[]' $selected /> $label </label> <br>";
 	    }
 
 	    return $response;
@@ -37,33 +37,33 @@ class WP_Spotlite_Core{
 	    return $searchabel_post_type;
 	}
 
-	public static function wp_spotlite_get_settings(){
-	    $wp_spotlite_setting = get_option('wp_spotlite_setting');
-	    if (empty($wp_spotlite_setting)) {
+	public static function wp_spotlight_get_settings(){
+	    $wp_spotlight_setting = get_option('wp_spotlight_setting');
+	    if (empty($wp_spotlight_setting)) {
 	        return false;
 	    }
 
-	    return unserialize($wp_spotlite_setting);
+	    return unserialize($wp_spotlight_setting);
 
 	}
 
-	public static function wp_spotlite_search_include_options(){
-	    $wp_spotlite_setting = WP_Spotlite_Core::wp_spotlite_get_settings();
-	    if(empty($wp_spotlite_setting['search_include_options'])) {
+	public static function wp_spotlight_search_include_options(){
+	    $wp_spotlight_setting = WP_Spotlight_Core::wp_spotlight_get_settings();
+	    if(empty($wp_spotlight_setting['search_include_options'])) {
 	        return false;
 	    }
-	    return $wp_spotlite_setting['search_include_options'];
+	    return $wp_spotlight_setting['search_include_options'];
 	}
 
 	public static function get_search_content(){
 		global $submenu, $menu, $wp_admin_bar, $wpdb;
 		$final_response = array();
-		$all_post_types = WP_Spotlite_Core::get_all_searchable_post();
+		$all_post_types = WP_Spotlight_Core::get_all_searchable_post();
 		$final_response = array_merge($final_response,$all_post_types);
-		$searchabel_menu = WP_Spotlite_Core::get_searchable_menu();
-		$users = WP_Spotlite_Core::get_all_users();
+		$searchabel_menu = WP_Spotlight_Core::get_searchable_menu();
+		$users = WP_Spotlight_Core::get_all_users();
 		$final_response = array_merge($final_response,$users);
-		$comments = WP_Spotlite_Core::get_all_comments();
+		$comments = WP_Spotlight_Core::get_all_comments();
 		$final_response = array_merge($final_response,$comments);
 		$join = array_merge($final_response,$searchabel_menu);
 
@@ -113,9 +113,12 @@ class WP_Spotlite_Core{
 		global $wpdb;
 		$all_post_types = array();
 		$post_types = get_post_types('', 'object');
-		$wp_spotlite_setting = WP_Spotlite_Core::wp_spotlite_search_include_options();
+		$wp_spotlight_setting = WP_Spotlight_Core::wp_spotlight_search_include_options();
+		if ($wp_spotlight_setting == false) {
+			return array();
+		}
 		foreach ($post_types as $key => $post) {
-		    if (!in_array($key, $wp_spotlite_setting) || $key == 'attachment' || ($post->show_in_menu == false && $post->public == false)) {
+		    if (!in_array($key, $wp_spotlight_setting) || $key == 'attachment' || ($post->show_in_menu == false && $post->public == false)) {
 		        continue;
 		    }
 		    $post_temp = array();
@@ -155,8 +158,11 @@ class WP_Spotlite_Core{
 
 	public static function get_all_users(){
 		$user_results = array();
-		$wp_spotlite_setting = WP_Spotlite_Core::wp_spotlite_search_include_options();
-		if (!in_array('users', $wp_spotlite_setting)) {
+		$wp_spotlight_setting = WP_Spotlight_Core::wp_spotlight_search_include_options();
+		if ($wp_spotlight_setting == false) {
+			return array();
+		}
+		if (!in_array('users', $wp_spotlight_setting)) {
 			return $user_results;
 		}
 		$users = get_users();
@@ -174,8 +180,11 @@ class WP_Spotlite_Core{
 
 	public static function get_all_comments(){
 		$comment_results = array();
-		$wp_spotlite_setting = WP_Spotlite_Core::wp_spotlite_search_include_options();
-		if (!in_array('comments', $wp_spotlite_setting)) {
+		$wp_spotlight_setting = WP_Spotlight_Core::wp_spotlight_search_include_options();
+		if ($wp_spotlight_setting == false) {
+			return array();
+		}
+		if (!in_array('comments', $wp_spotlight_setting)) {
 			return $comment_results;
 		}
 		$comments = get_comments();
@@ -192,12 +201,12 @@ class WP_Spotlite_Core{
 		return $comment_results;
 	}
 
-	public static function wp_spotlite_save_settings($data){
+	public static function wp_spotlight_save_settings($data){
 	    if (empty($data['search_include_options'])) {
 	        return false;
 	    }
 	    $settings['search_include_options'] = $data['search_include_options'];
-	    update_option('wp_spotlite_setting', serialize($settings));
+	    update_option('wp_spotlight_setting', serialize($settings));
 	}
 
 }
