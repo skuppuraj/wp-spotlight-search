@@ -96,7 +96,7 @@ class WP_Spotlight_Core{
 		    }elseif(!empty($value[0])){
 		        $temp = array();
 		        $temp['title']= $value[0];
-		        if (empty($parent_url_parts['extension'])) {
+		        if (empty($home_url_part['extension'])) {
 		            $temp['url'] = 'admin.php?page='. $value[2];  
 		        }else{
 		            $temp['url']= $value[2];
