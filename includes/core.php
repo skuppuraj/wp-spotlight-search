@@ -3,9 +3,11 @@
 class WP_Spotlite_Core{
 
 	public static function get_searchabel_post_types_checkbox(){
+		$other_types[0] = array('type'=>'users', 'label' => 'Users');
 	    $searchabel_post_type = WP_Spotlite_Core::get_searchabel_post_types();
 	    $response = '';
 	    $wp_spotlite_settings = WP_Spotlite_Core::wp_spotlite_search_include_options();
+	    $searchabel_post_type = array_merge($searchabel_post_type, $other_types);
 	    foreach ($searchabel_post_type as $key => $value) {
 	        $type = $value['type'];
 	        $label = $value['label'];
@@ -58,6 +60,8 @@ class WP_Spotlite_Core{
 		$all_post_types = WP_Spotlite_Core::get_all_searchable_post();
 		$final_response = array_merge($final_response,$all_post_types);
 		$searchabel_menu = WP_Spotlite_Core::get_searchable_menu();
+		$users = WP_Spotlite_Core::get_all_users();
+		$final_response = array_merge($final_response,$users);
 		$join = array_merge($final_response,$searchabel_menu);
 
 		return $join;
@@ -144,6 +148,25 @@ class WP_Spotlite_Core{
 		}
 
 		return $all_post_types;
+	}
+
+	public static function get_all_users(){
+		$user_results = array();
+		$wp_spotlite_setting = WP_Spotlite_Core::wp_spotlite_search_include_options();
+		if (!in_array('users', $wp_spotlite_setting)) {
+			return $user_results;
+		}
+		$users = get_users();
+		foreach ($users as $key => $value) {
+			$user_temp = array();
+			$user_temp['ID'] = $value->data->ID;
+			$user_temp['title'] = $value->data->user_login;
+			$user_temp['price'] = $value->roles[0];
+			$user_temp['category'] = 'Users';
+			$user_temp['url'] = 'user-edit.php?user_id='.$value->data->ID.'&wp_http_referer=%2Fsftp%2Fw1%2Fwp-admin%2Fusers.php';
+			array_push($user_results, $user_temp);
+		}
+		return $user_results;
 	}
 
 	public static function wp_spotlite_save_settings($data){
