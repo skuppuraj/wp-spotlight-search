@@ -1,17 +1,17 @@
-.wp-spotlite-settings-main-title{
+.wp-spotlight-settings-main-title{
 	padding-bottom: 10px;
 	padding-top: 20px;
 }
 
-.wp-spotlite-settings-table{
+.wp-spotlight-settings-table{
 	padding-top: 10px;
 }
 
-.wp-spotlite-settings-input-text{
+.wp-spotlight-settings-input-text{
 	width: 25%;
 }
 
-.wp-spotlite-settings-checkbox{
+.wp-spotlight-settings-checkbox{
 	display: block;
 }
 
@@ -20,22 +20,22 @@
 	display: none;
 }
 
-.wp-spotlite-settings-table th, .wp-spotlite-settings-table td{
+.wp-spotlight-settings-table th, .wp-spotlight-settings-table td{
 	padding: 0;
 	font-weight: unset;
 }
 
-.wp-spotlite-settings-branding-div{
+.wp-spotlight-settings-branding-div{
 	width: 290px;
 	float: left;
 	padding-right: 20px
 }
 
-.wp-spotlite-settings-branding-div div{
+.wp-spotlight-settings-branding-div div{
 	padding-bottom: 15px;
 }
 
-.wp-spotlite-settings-branding-div p{
+.wp-spotlight-settings-branding-div p{
 	padding-bottom: 10px;
 }
 
@@ -49,11 +49,11 @@ input[name="whitelable-status"]{
 	display: none;
 }
 
-#wp-spotlite-settings-elementor, #wp-spotlite-settings-elementor-pro{
+#wp-spotlight-settings-elementor, #wp-spotlight-settings-elementor-pro{
 	padding-top: 20px;
 }
 
-.wp-spotlite-settings-login-field{
+.wp-spotlight-settings-login-field{
 	height: 28px;
 	margin-top: 10px;
 }
