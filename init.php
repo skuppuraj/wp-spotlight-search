@@ -22,6 +22,7 @@ class WP_Spotlight {
     private function init(){
         $this->constants();
         $this->hooks();
+        $this->add_filter();
         $this->add_action();
     }
 
@@ -52,6 +53,10 @@ class WP_Spotlight {
         add_action( 'admin_enqueue_scripts', array($this, 'wp_spotlight_enqueue') );
         add_action( 'wp_before_admin_bar_render', array($this, 'wp_soptlight_add_toolbar_items'), 999999999);
         add_action( 'admin_footer', array($this, 'send_source_to_admin'), 999999999);
+    }
+
+    private function add_filter(){
+        add_filter( 'plugin_action_links', array($this, 'add_seeting_button_plugin_row'), 10, 5 );
     }
 
     public function wp_spotlight_menu(){
@@ -114,6 +119,18 @@ class WP_Spotlight {
 
         $content = ob_get_clean();
         print $content;
+    }
+
+    public function add_seeting_button_plugin_row($links, $file){
+        if ( strpos( $file, 'wp-spotlight/init.php' ) !== false ) {
+                $new_links = array(
+                        'settings' => '<a href="'.admin_url('admin.php?page=wp_spotlight_menu').'" style="font-weight:bold">Settings</a>',
+                        );
+                
+                $links = array_merge( $links, $new_links );
+            }
+            
+            return $links;
     }
 }
 
