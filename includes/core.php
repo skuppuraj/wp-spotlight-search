@@ -202,8 +202,12 @@ class WP_Spotlight_Core{
 	}
 
 	public static function wp_spotlight_save_settings($data){
-	    if (empty($data['search_include_options'])) {
+	    if (empty($data['search_include_options']) && empty($data['submit'])) {
 	        return false;
+	    }
+	    if (empty($data['search_include_options']) && !empty($data['submit'])) {
+	        delete_option('wp_spotlight_setting');
+	        return true;
 	    }
 	    $settings['search_include_options'] = $data['search_include_options'];
 	    update_option('wp_spotlight_setting', serialize($settings));
