@@ -60,6 +60,7 @@ class WP_Spotlight {
 
     public function wp_spotlight_menu_page(){
         WP_Spotlight_Core::wp_spotlight_save_settings($_POST);
+        WP_Spotlight_Core::wp_spotlight_save_admin_notice();
         require_once dirname( __FILE__ ).'/admin/view/settings.php';
     }
 
@@ -90,13 +91,13 @@ class WP_Spotlight {
     }
 
     public function admin_notices(){
-        $settings = WP_Spotlight_Core::wp_spotlight_get_settings();
-        if ($settings != false) {
+        $admin_notices = WP_Spotlight_Core::wp_spotlight_admin_notice();
+        if ($admin_notices != false) {
             return false;
         }
         ?>
            <div class="notice notice-success is-dismissible">
-               <p><?php _e( 'Thank you for installing the WP Spotlight Search! you can modify the search option <a href="admin.php?page=wp_spotlight_menu_page">here</a>', WP_SPOTLIGHT_SEARCH_NAME ); ?></p>
+               <p><?php _e( 'Thank you for installing the WP Spotlight Search! you can modify the search option <a href="admin.php?page=wp_spotlight_menu">here</a>', WP_SPOTLIGHT_SEARCH_NAME ); ?></p>
            </div>
            <?php
     }

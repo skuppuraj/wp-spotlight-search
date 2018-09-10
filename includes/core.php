@@ -213,4 +213,12 @@ class WP_Spotlight_Core{
 	    update_option('wp_spotlight_setting', serialize($settings));
 	}
 
+	public static function wp_spotlight_admin_notice(){
+		return get_option('wp_spotlight_admin_notice');
+	}
+
+	public static function wp_spotlight_save_admin_notice(){
+		 update_option('wp_spotlight_admin_notice', 1);
+	}
+
 }
