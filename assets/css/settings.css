@@ -15,45 +15,7 @@
 	display: block;
 }
 
-.whitelable-section-notes{
-	padding: 10px 0px;
-	display: none;
-}
-
 .wp-spotlight-settings-table th, .wp-spotlight-settings-table td{
 	padding: 0;
 	font-weight: unset;
-}
-
-.wp-spotlight-settings-branding-div{
-	width: 290px;
-	float: left;
-	padding-right: 20px
-}
-
-.wp-spotlight-settings-branding-div div{
-	padding-bottom: 15px;
-}
-
-.wp-spotlight-settings-branding-div p{
-	padding-bottom: 10px;
-}
-
-input[name="whitelable-status"]{
-	margin-left: 20px;
-}
-
-#logo-view-src{
-	width: 50px;
-	height:50px;
-	display: none;
-}
-
-#wp-spotlight-settings-elementor, #wp-spotlight-settings-elementor-pro{
-	padding-top: 20px;
-}
-
-.wp-spotlight-settings-login-field{
-	height: 28px;
-	margin-top: 10px;
 }
