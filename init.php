@@ -125,7 +125,7 @@ class WP_Spotlight {
         if ( strpos( $file, 'wp-spotlight/init.php' ) !== false ) {
                 $new_links = array(
                         'settings' => '<a href="'.admin_url('admin.php?page=wp_spotlight_menu').'" style="font-weight:bold">Settings</a>',
-                        'donate'   => '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MWVDKFWB7WMY2" style="font-weight:bold"> Donate</a>'
+                        'donate'   => '<a href="'.admin_url('admin.php?page=wp_spotlight_menu').'" style="font-weight:bold"> Donate</a>'
                         );
                 
                 $links = array_merge( $links, $new_links );
