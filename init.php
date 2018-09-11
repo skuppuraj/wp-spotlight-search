@@ -102,7 +102,7 @@ class WP_Spotlight {
         }
         ?>
            <div class="notice notice-success is-dismissible">
-               <p><?php _e( 'Thank you for installing the WP Spotlight Search! you can modify the search option <a href="admin.php?page=wp_spotlight_menu">here</a>', WP_SPOTLIGHT_SEARCH_NAME ); ?></p>
+               <p><?php _e( 'Yay! You made your search smarter by installing <span style="font-weight: 700;">WP Spotlight search</span>. Change your Search preferences <a href="admin.php?page=wp_spotlight_menu">here</a>', WP_SPOTLIGHT_SEARCH_NAME ); ?></p>
            </div>
            <?php
     }
