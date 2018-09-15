@@ -2,7 +2,7 @@
 /* 
 Plugin Name: WP Spotlight Search
 Plugin URI: http://wpspotlight.com/
-Description: You can search the content.
+Description: WP Spotlight Search plugin allows you to search anything on your WordPress admin quickly, precisely and efficiently. No hassle! Nothing!
 Author: Kuppuraj
 Version: 1.0.0
 Author URI: http://kuppurajs.com
@@ -102,7 +102,7 @@ class WP_Spotlight {
         }
         ?>
            <div class="notice notice-success is-dismissible">
-               <p><?php _e( 'Thank you for installing the WP Spotlight Search! you can modify the search option <a href="admin.php?page=wp_spotlight_menu">here</a>', WP_SPOTLIGHT_SEARCH_NAME ); ?></p>
+               <p><?php _e( 'Yay! You made your search smarter by installing <span style="font-weight: 700;">WP Spotlight search</span>. Change your Search preferences <a href="admin.php?page=wp_spotlight_menu">here</a>', WP_SPOTLIGHT_SEARCH_NAME ); ?></p>
            </div>
            <?php
     }
@@ -125,6 +125,7 @@ class WP_Spotlight {
         if ( strpos( $file, 'wp-spotlight/init.php' ) !== false ) {
                 $new_links = array(
                         'settings' => '<a href="'.admin_url('admin.php?page=wp_spotlight_menu').'" style="font-weight:bold">Settings</a>',
+                        'donate'   => '<a href="'.admin_url('admin.php?page=wp_spotlight_menu').'" style="font-weight:bold"> Donate</a>'
                         );
                 
                 $links = array_merge( $links, $new_links );
