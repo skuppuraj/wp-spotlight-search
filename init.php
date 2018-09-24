@@ -32,7 +32,7 @@ class WP_Spotlight {
         define( 'WP_SPOTLIGHT_SEARCH_URL', plugin_dir_url( __FILE__ ) );
         define( 'WP_SPOTLIGHT_SEARCH_DIR', dirname( __FILE__ ) );
         define( 'WP_SPOTLIGHT_SEARCH__FILE__', __FILE__ );
-        define( 'WP_SPOTLIGHT_SEARCH_PLUGIN_BASE', plugin_basename( E4E_PLUGIN__FILE__ ) );
+        define( 'WP_SPOTLIGHT_SEARCH_PLUGIN_BASE', plugin_basename( WP_SPOTLIGHT_SEARCH__FILE__ ) );
     }
 
     private function hooks(){
