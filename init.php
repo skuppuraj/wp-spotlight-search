@@ -1,8 +1,8 @@
 <?php
 /* 
 Plugin Name: WP Spotlight Search
-Plugin URI: https://github.com/skuppuraj
-Description: WP Spotlight Search plugin allows you to search anything on your WordPress admin quickly, precisely and efficiently. No hassle! Nothing!
+Plugin URI: https://wordpress.org/plugins/wp-spotlight-search/
+Description: WP Spotlight search is a powerful global utility search plugin for WordPress Dashboard - it is an advancement of the default WordPress dashboard search.Nothing!
 Author: Kuppuraj
 Version: 1.0.0
 Author URI: https://github.com/skuppuraj
