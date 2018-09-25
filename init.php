@@ -56,7 +56,9 @@ class WP_Spotlight {
     }
 
     private function add_filter(){
-        add_filter( 'plugin_action_links', array($this, 'add_seeting_button_plugin_row'), 10, 5 );
+        add_filter( 'plugin_action_links', array($this, 'add_setting_button_plugin_row'), 10, 5 );
+        add_filter( 'plugin_row_meta', array($this, 'add_custom_button_row_meta'), 10, 5);
+
     }
 
     public function wp_spotlight_menu(){
@@ -121,7 +123,7 @@ class WP_Spotlight {
         print $content;
     }
 
-    public function add_seeting_button_plugin_row($links, $file){
+    public function add_setting_button_plugin_row($links, $file){
         if ( strpos( $file, 'wp-spotlight-search/init.php' ) !== false ) {
                 $new_links = array(
                         'settings' => '<a href="'.admin_url('admin.php?page=wp_spotlight_menu').'" style="font-weight:bold">Settings</a>',
@@ -132,6 +134,19 @@ class WP_Spotlight {
             }
             
             return $links;
+    }
+
+    public function add_custom_button_row_meta( $links, $file ) {
+
+        if ( strpos( $file, 'wp-spotlight-search/init.php' ) !== false ) {
+            $new_links = array(
+                    'rating' => '<a href="https://wordpress.org/support/plugin/wp-spotlight-search/reviews/#new-post" target="_blank">Rate this plugin</a>'
+                    );
+            
+            $links = array_merge( $links, $new_links );
+        }
+        
+        return $links;
     }
 }
 
