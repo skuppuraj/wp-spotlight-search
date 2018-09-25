@@ -28,7 +28,7 @@ class WP_Spotlight {
 
     private function constants(){
         define( 'WP_SPOTLIGHT_SEARCH_VERSION', '1.0.0' );
-        define( 'WP_SPOTLIGHT_SEARCH_NAME', 'wp-spotlight' );
+        define( 'WP_SPOTLIGHT_SEARCH_NAME', 'wp-spotlight-search' );
         define( 'WP_SPOTLIGHT_SEARCH_URL', plugin_dir_url( __FILE__ ) );
         define( 'WP_SPOTLIGHT_SEARCH_DIR', dirname( __FILE__ ) );
         define( 'WP_SPOTLIGHT_SEARCH__FILE__', __FILE__ );
@@ -122,7 +122,7 @@ class WP_Spotlight {
     }
 
     public function add_seeting_button_plugin_row($links, $file){
-        if ( strpos( $file, 'wp-spotlight/init.php' ) !== false ) {
+        if ( strpos( $file, 'wp-spotlight-search/init.php' ) !== false ) {
                 $new_links = array(
                         'settings' => '<a href="'.admin_url('admin.php?page=wp_spotlight_menu').'" style="font-weight:bold">Settings</a>',
                         'donate'   => '<a href="'.admin_url('admin.php?page=wp_spotlight_menu').'" style="font-weight:bold"> Donate</a>'
