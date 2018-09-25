@@ -33,7 +33,7 @@ All you have to do is check the option to make it searchable.
 
 == Screenshots ==
 
-1. WP Spotlight Search text field
+1. WP Spotlight Search field
 2. WP Spotlight Search Settings
 3. Menu and Submenu search result
 4. Product search
