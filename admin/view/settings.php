@@ -10,7 +10,7 @@
 					<th>Plugin Support:</th>
 					<td>
 						<div>
-							<label><p><strong>Donating is not just about giving out money it's about making a difference </strong> <br>Your donation will make a huge difference in our lives. So please help us to create more awesome plugins like WP Spotlight search by donating us.</p></label>
+							<label><p>WP Spotlight Search is free to use - life is wonderful and lovely! It has required a great deal of time and effort to develop and you can help support this development by <strong>making a small donation</strong>.&nbsp;You get useful software and I get to carry on making it better.</p></label>
 							<br>
 							<input type="hidden" name="cmd" value="_xclick">
 							<input type="hidden" name="business" value="rajkuppus@gmail.com">
