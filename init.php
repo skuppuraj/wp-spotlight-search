@@ -76,7 +76,7 @@ class WP_Spotlight {
         $form = '<div class="ui search focus" style="background-color: rgba(0, 0, 0, 0);position: relative;">
                   <div class="ui left icon input" >
                     <input class="prompt" type="text" accesskey="s" autocorrect="on" placeholder="ctrl + alt + s to search ..." autofocus style="border-radius: 6px !important;">
-                    <i class="search icon" style="font-family: FontAwesome;cursor: default;position: absolute;line-height: 1;text-align: center;top: 0;right: 0;margin: 0;height: 100%;width: 2.67142857em;opacity: .5;border-radius: 0 .28571429rem .28571429rem 0;-webkit-transition: opacity .3s ease;transition: opacity .3s ease;background-color: rgba(0, 0, 0, 0);"></i>
+                     <img src="'.WP_SPOTLIGHT_SEARCH_URL.'/assets/images/search.svg" style="height: 13px;padding: 11px;position: absolute;opacity: .5;">
                   </div>
                 </div>
                 ';
