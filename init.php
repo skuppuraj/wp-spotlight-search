@@ -75,7 +75,7 @@ class WP_Spotlight {
         global $wp_admin_bar;
         $form = '<div class="ui search focus" style="background-color: rgba(0, 0, 0, 0);position: relative;">
                   <div class="ui left icon input" >
-                    <input class="prompt" type="text" accesskey="s" autocorrect="on" placeholder="ctrl + alt + s to search ..." autofocus style="border-radius: 6px !important;">
+                    <input class="prompt" type="text" id="wp_spotlight_search_box" autocorrect="on" placeholder="ctrl + s to search ..." autofocus style="border-radius: 6px !important;">
                      <img src="'.WP_SPOTLIGHT_SEARCH_URL.'/assets/images/search.svg" style="height: 13px;padding: 11px;position: absolute;opacity: .5;">
                   </div>
                 </div>
@@ -93,6 +93,7 @@ class WP_Spotlight {
 
         wp_enqueue_script( 'wp_spotlight_custom_script', plugin_dir_url( __FILE__ ) . 'assets/js/init.js' );
         wp_enqueue_script( 'wp_spotlight_sematic_js', plugin_dir_url( __FILE__ ) . 'assets/js/semantic.min.js' );
+        wp_enqueue_script( 'wp_spotlight_shortcut_js', plugin_dir_url( __FILE__ ) . 'assets/js/keyboardShortcut.js' );
         wp_enqueue_style( 'wp_spotlight_sematic_css', plugin_dir_url( __FILE__ ) . 'assets/css/semantic.min.css' );
         wp_enqueue_style( 'wp_spotlight_setting_css', plugin_dir_url( __FILE__ ) . 'assets/css/settings.css' );
     }
