@@ -5,7 +5,7 @@ Requires at least: 3.1
 Tested up to: 4.9
 Stable tag: trunk
 
-WP Spotlight search is a powerful global utility search plugin for WordPress Dashboard - it is an advancement of the default WordPress dashboard search.
+WP Spotlight search is a powerful utility search plugin for WordPress Dashboard - it is an advancement of the default WordPress dashboard search.
 
 == Description ==
 
@@ -44,3 +44,7 @@ All you have to do is check the option to make it searchable.
 
 = 1.0.0  - 25th Sep 2018 =
 * Initial release.
+
+= 1.0.1  - 28th Sep 2018 =
+* Improvement: Save setting admin notice added
+* Fix: Search bar icon not showing on Windows & Linux.
