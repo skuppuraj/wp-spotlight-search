@@ -46,5 +46,6 @@ All you have to do is check the option to make it searchable.
 * Initial release.
 
 = 1.0.1  - 28th Sep 2018 =
+* Improvement: Global shortcut key added for all browsers and all OS's
 * Improvement: Save setting admin notice added
 * Fix: Search bar icon not showing on Windows & Linux.
