@@ -2,7 +2,7 @@
 /* 
 Plugin Name: WP Spotlight Search
 Plugin URI: https://wordpress.org/plugins/wp-spotlight-search/
-Description: WP Spotlight search is a powerful global utility search plugin for WordPress Dashboard - it is an advancement of the default WordPress dashboard search.Nothing!
+Description: WP Spotlight search is a powerful global utility search plugin for WordPress Dashboard - it is an advancement of the default WordPress dashboard search.
 Author: Kuppuraj
 Version: 1.0.0
 Author URI: https://github.com/skuppuraj
@@ -91,9 +91,9 @@ class WP_Spotlight {
     }
     public function wp_spotlight_enqueue($hook) {
 
+        wp_enqueue_script( 'wp_spotlight_shortcut_js', plugin_dir_url( __FILE__ ) . 'assets/js/keyboardShortcut.js' );
         wp_enqueue_script( 'wp_spotlight_custom_script', plugin_dir_url( __FILE__ ) . 'assets/js/init.js' );
         wp_enqueue_script( 'wp_spotlight_sematic_js', plugin_dir_url( __FILE__ ) . 'assets/js/semantic.min.js' );
-        wp_enqueue_script( 'wp_spotlight_shortcut_js', plugin_dir_url( __FILE__ ) . 'assets/js/keyboardShortcut.js' );
         wp_enqueue_style( 'wp_spotlight_sematic_css', plugin_dir_url( __FILE__ ) . 'assets/css/semantic.min.css' );
         wp_enqueue_style( 'wp_spotlight_setting_css', plugin_dir_url( __FILE__ ) . 'assets/css/settings.css' );
     }

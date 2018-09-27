@@ -1,204 +1,223 @@
-/*jslint browser: true*/
-/*jslint jquery: true*/
-
-/*
- * jQuery Hotkeys Plugin
- * Copyright 2010, John Resig
- * Dual licensed under the MIT or GPL Version 2 licenses.
- *
- * Based upon the plugin by Tzury Bar Yochay:
- * https://github.com/tzuryby/jquery.hotkeys
- *
- * Original idea by:
- * Binny V A, http://www.openjs.com/scripts/events/keyboard_shortcuts/
+/**
+ * http://www.openjs.com/scripts/events/keyboard_shortcuts/
+ * Version : 2.01.B
+ * By Binny V A
+ * License : BSD
  */
+shortcut = {
+    'all_shortcuts':{},//All the shortcuts are stored in this array
+    'add': function(shortcut_combination,callback,opt) {
+        //Provide a set of default options
+        var default_options = {
+            'type':'keydown',
+            'propagate':false,
+            'disable_in_input':false,
+            'target':document,
+            'keycode':false
+        }
+        if(!opt) opt = default_options;
+        else {
+            for(var dfo in default_options) {
+                if(typeof opt[dfo] == 'undefined') opt[dfo] = default_options[dfo];
+            }
+        }
 
-/*
- * One small change is: now keys are passed by object { keys: '...' }
- * Might be useful, when you want to pass some other data to your handler
- */
+        var ele = opt.target;
+        if(typeof opt.target == 'string') ele = document.getElementById(opt.target);
+        var ths = this;
+        shortcut_combination = shortcut_combination.toLowerCase();
 
-(function(jQuery) {
+        //The function to be called at keypress
+        var func = function(e) {
+            e = e || window.event;
+            
+            if(opt['disable_in_input']) { //Don't enable shortcut keys in Input, Textarea fields
+                var element;
+                if(e.target) element=e.target;
+                else if(e.srcElement) element=e.srcElement;
+                if(element.nodeType==3) element=element.parentNode;
 
-  jQuery.hotkeys = {
-    version: "0.2.0",
+                if(element.tagName == 'INPUT' || element.tagName == 'TEXTAREA') return;
+            }
+    
+            //Find Which key is pressed
+            if (e.keyCode) code = e.keyCode;
+            else if (e.which) code = e.which;
+            var character = String.fromCharCode(code).toLowerCase();
+            
+            if(code == 188) character=","; //If the user presses , when the type is onkeydown
+            if(code == 190) character="."; //If the user presses , when the type is onkeydown
 
-    specialKeys: {
-      8: "backspace",
-      9: "tab",
-      10: "return",
-      13: "return",
-      16: "shift",
-      17: "ctrl",
-      18: "alt",
-      19: "pause",
-      20: "capslock",
-      27: "esc",
-      32: "space",
-      33: "pageup",
-      34: "pagedown",
-      35: "end",
-      36: "home",
-      37: "left",
-      38: "up",
-      39: "right",
-      40: "down",
-      45: "insert",
-      46: "del",
-      59: ";",
-      61: "=",
-      96: "0",
-      97: "1",
-      98: "2",
-      99: "3",
-      100: "4",
-      101: "5",
-      102: "6",
-      103: "7",
-      104: "8",
-      105: "9",
-      106: "*",
-      107: "+",
-      109: "-",
-      110: ".",
-      111: "/",
-      112: "f1",
-      113: "f2",
-      114: "f3",
-      115: "f4",
-      116: "f5",
-      117: "f6",
-      118: "f7",
-      119: "f8",
-      120: "f9",
-      121: "f10",
-      122: "f11",
-      123: "f12",
-      144: "numlock",
-      145: "scroll",
-      173: "-",
-      186: ";",
-      187: "=",
-      188: ",",
-      189: "-",
-      190: ".",
-      191: "/",
-      192: "`",
-      219: "[",
-      220: "\\",
-      221: "]",
-      222: "'"
+            var keys = shortcut_combination.split("+");
+            //Key Pressed - counts the number of valid keypresses - if it is same as the number of keys, the shortcut function is invoked
+            var kp = 0;
+            
+            //Work around for stupid Shift key bug created by using lowercase - as a result the shift+num combination was broken
+            var shift_nums = {
+                "`":"~",
+                "1":"!",
+                "2":"@",
+                "3":"#",
+                "4":"$",
+                "5":"%",
+                "6":"^",
+                "7":"&",
+                "8":"*",
+                "9":"(",
+                "0":")",
+                "-":"_",
+                "=":"+",
+                ";":":",
+                "'":"\"",
+                ",":"<",
+                ".":">",
+                "/":"?",
+                "\\":"|"
+            }
+            //Special Keys - and their codes
+            var special_keys = {
+                'esc':27,
+                'escape':27,
+                'tab':9,
+                'space':32,
+                'return':13,
+                'enter':13,
+                'backspace':8,
+    
+                'scrolllock':145,
+                'scroll_lock':145,
+                'scroll':145,
+                'capslock':20,
+                'caps_lock':20,
+                'caps':20,
+                'numlock':144,
+                'num_lock':144,
+                'num':144,
+                
+                'pause':19,
+                'break':19,
+                
+                'insert':45,
+                'home':36,
+                'delete':46,
+                'end':35,
+                
+                'pageup':33,
+                'page_up':33,
+                'pu':33,
+    
+                'pagedown':34,
+                'page_down':34,
+                'pd':34,
+    
+                'left':37,
+                'up':38,
+                'right':39,
+                'down':40,
+    
+                'f1':112,
+                'f2':113,
+                'f3':114,
+                'f4':115,
+                'f5':116,
+                'f6':117,
+                'f7':118,
+                'f8':119,
+                'f9':120,
+                'f10':121,
+                'f11':122,
+                'f12':123
+            }
+    
+            var modifiers = { 
+                shift: { wanted:false, pressed:false},
+                ctrl : { wanted:false, pressed:false},
+                alt  : { wanted:false, pressed:false},
+                meta : { wanted:false, pressed:false}   //Meta is Mac specific
+            };
+                        
+            if(e.ctrlKey)   modifiers.ctrl.pressed = true;
+            if(e.shiftKey)  modifiers.shift.pressed = true;
+            if(e.altKey)    modifiers.alt.pressed = true;
+            if(e.metaKey)   modifiers.meta.pressed = true;
+                        
+            for(var i=0; k=keys[i],i<keys.length; i++) {
+                //Modifiers
+                if(k == 'ctrl' || k == 'control') {
+                    kp++;
+                    modifiers.ctrl.wanted = true;
+
+                } else if(k == 'shift') {
+                    kp++;
+                    modifiers.shift.wanted = true;
+
+                } else if(k == 'alt') {
+                    kp++;
+                    modifiers.alt.wanted = true;
+                } else if(k == 'meta') {
+                    kp++;
+                    modifiers.meta.wanted = true;
+                } else if(k.length > 1) { //If it is a special key
+                    if(special_keys[k] == code) kp++;
+                    
+                } else if(opt['keycode']) {
+                    if(opt['keycode'] == code) kp++;
+
+                } else { //The special keys did not match
+                    if(character == k) kp++;
+                    else {
+                        if(shift_nums[character] && e.shiftKey) { //Stupid Shift key bug created by using lowercase
+                            character = shift_nums[character]; 
+                            if(character == k) kp++;
+                        }
+                    }
+                }
+            }
+            
+            if(kp == keys.length && 
+                        modifiers.ctrl.pressed == modifiers.ctrl.wanted &&
+                        modifiers.shift.pressed == modifiers.shift.wanted &&
+                        modifiers.alt.pressed == modifiers.alt.wanted &&
+                        modifiers.meta.pressed == modifiers.meta.wanted) {
+                callback(e);
+    
+                if(!opt['propagate']) { //Stop the event
+                    //e.cancelBubble is supported by IE - this will kill the bubbling process.
+                    e.cancelBubble = true;
+                    e.returnValue = false;
+    
+                    //e.stopPropagation works in Firefox.
+                    if (e.stopPropagation) {
+                        e.stopPropagation();
+                        e.preventDefault();
+                    }
+                    return false;
+                }
+            }
+        }
+        this.all_shortcuts[shortcut_combination] = {
+            'callback':func, 
+            'target':ele, 
+            'event': opt['type']
+        };
+        //Attach the function with the event
+        if(ele.addEventListener) ele.addEventListener(opt['type'], func, false);
+        else if(ele.attachEvent) ele.attachEvent('on'+opt['type'], func);
+        else ele['on'+opt['type']] = func;
     },
 
-    shiftNums: {
-      "`": "~",
-      "1": "!",
-      "2": "@",
-      "3": "#",
-      "4": "$",
-      "5": "%",
-      "6": "^",
-      "7": "&",
-      "8": "*",
-      "9": "(",
-      "0": ")",
-      "-": "_",
-      "=": "+",
-      ";": ": ",
-      "'": "\"",
-      ",": "<",
-      ".": ">",
-      "/": "?",
-      "\\": "|"
-    },
+    //Remove the shortcut - just specify the shortcut and I will remove the binding
+    'remove':function(shortcut_combination) {
+        shortcut_combination = shortcut_combination.toLowerCase();
+        var binding = this.all_shortcuts[shortcut_combination];
+        delete(this.all_shortcuts[shortcut_combination])
+        if(!binding) return;
+        var type = binding['event'];
+        var ele = binding['target'];
+        var callback = binding['callback'];
 
-    // excludes: button, checkbox, file, hidden, image, password, radio, reset, search, submit, url
-    textAcceptingInputTypes: [
-      "text", "password", "number", "email", "url", "range", "date", "month", "week", "time", "datetime",
-      "datetime-local", "search", "color", "tel"],
-
-    // default input types not to bind to unless bound directly
-    textInputTypes: /textarea|input|select/i,
-
-    options: {
-      filterInputAcceptingElements: true,
-      filterTextInputs: true,
-      filterContentEditable: true
+        if(ele.detachEvent) ele.detachEvent('on'+type, callback);
+        else if(ele.removeEventListener) ele.removeEventListener(type, callback, false);
+        else ele['on'+type] = false;
     }
-  };
-
-  function keyHandler(handleObj) {
-    if (typeof handleObj.data === "string") {
-      handleObj.data = {
-        keys: handleObj.data
-      };
-    }
-
-    // Only care when a possible input has been specified
-    if (!handleObj.data || !handleObj.data.keys || typeof handleObj.data.keys !== "string") {
-      return;
-    }
-
-    var origHandler = handleObj.handler,
-      keys = handleObj.data.keys.toLowerCase().split(" ");
-
-    handleObj.handler = function(event) {
-      //      Don't fire in text-accepting inputs that we didn't directly bind to
-      if (this !== event.target &&
-        (jQuery.hotkeys.options.filterInputAcceptingElements &&
-          jQuery.hotkeys.textInputTypes.test(event.target.nodeName) ||
-          (jQuery.hotkeys.options.filterContentEditable && jQuery(event.target).attr('contenteditable')) ||
-          (jQuery.hotkeys.options.filterTextInputs &&
-            jQuery.inArray(event.target.type, jQuery.hotkeys.textAcceptingInputTypes) > -1))) {
-        return;
-      }
-
-      var special = event.type !== "keypress" && jQuery.hotkeys.specialKeys[event.which],
-        character = String.fromCharCode(event.which).toLowerCase(),
-        modif = "",
-        possible = {};
-
-      jQuery.each(["alt", "ctrl", "shift"], function(index, specialKey) {
-
-        if (event[specialKey + 'Key'] && special !== specialKey) {
-          modif += specialKey + '+';
-        }
-      });
-
-      // metaKey is triggered off ctrlKey erronously
-      if (event.metaKey && !event.ctrlKey && special !== "meta") {
-        modif += "meta+";
-      }
-
-      if (event.metaKey && special !== "meta" && modif.indexOf("alt+ctrl+shift+") > -1) {
-        modif = modif.replace("alt+ctrl+shift+", "hyper+");
-      }
-
-      if (special) {
-        possible[modif + special] = true;
-      }
-      else {
-        possible[modif + character] = true;
-        possible[modif + jQuery.hotkeys.shiftNums[character]] = true;
-
-        // "$" can be triggered as "Shift+4" or "Shift+$" or just "$"
-        if (modif === "shift+") {
-          possible[jQuery.hotkeys.shiftNums[character]] = true;
-        }
-      }
-
-      for (var i = 0, l = keys.length; i < l; i++) {
-        if (possible[keys[i]]) {
-          return origHandler.apply(this, arguments);
-        }
-      }
-    };
-  }
-
-  jQuery.each(["keydown", "keyup", "keypress"], function() {
-    jQuery.event.special[this] = {
-      add: keyHandler
-    };
-  });
-
-})(jQuery || this.jQuery || window.jQuery);
+}
