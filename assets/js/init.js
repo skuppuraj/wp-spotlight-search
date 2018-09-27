@@ -15,7 +15,7 @@ jQuery(document).ready(function() {
     ;
 });
 
-shortcut.add("Ctrl+S",function() {
+wp_spotlight_shortcut.add("Ctrl+S",function() {
 
 jQuery('#wp_spotlight_search_box').focus();
 })
