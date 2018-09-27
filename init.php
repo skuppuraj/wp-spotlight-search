@@ -4,7 +4,7 @@ Plugin Name: WP Spotlight Search
 Plugin URI: https://wordpress.org/plugins/wp-spotlight-search/
 Description: WP Spotlight search is a powerful global utility search plugin for WordPress Dashboard - it is an advancement of the default WordPress dashboard search.
 Author: Kuppuraj
-Version: 1.0.0
+Version: 1.0.1
 Author URI: https://github.com/skuppuraj
 
 */
@@ -27,7 +27,7 @@ class WP_Spotlight {
     }
 
     private function constants(){
-        define( 'WP_SPOTLIGHT_SEARCH_VERSION', '1.0.0' );
+        define( 'WP_SPOTLIGHT_SEARCH_VERSION', '1.0.1' );
         define( 'WP_SPOTLIGHT_SEARCH_NAME', 'wp-spotlight-search' );
         define( 'WP_SPOTLIGHT_SEARCH_URL', plugin_dir_url( __FILE__ ) );
         define( 'WP_SPOTLIGHT_SEARCH_DIR', dirname( __FILE__ ) );
