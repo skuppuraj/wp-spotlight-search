@@ -211,6 +211,11 @@ class WP_Spotlight_Core{
 	    }
 	    $settings['search_include_options'] = $data['search_include_options'];
 	    update_option('wp_spotlight_setting', serialize($settings));
+	     ?>
+	    <div class="notice notice-success is-dismissible">
+	        <p><?php _e( 'WP Spotlight settings saved', WP_SPOTLIGHT_SEARCH_NAME ); ?></p>
+	    </div>
+	    <?php
 	}
 
 	public static function wp_spotlight_admin_notice(){
