@@ -1,0 +1,41 @@
+{
+  "name": "wp-spotlight-search",
+  "version": "2.0.0",
+  "description": "Powerful admin search tool",
+  "scripts": {
+    "dev": "npx webpack --env development",
+    "production": "npx webpack -p",
+    "watch": "npm run dev -- --watch"
+  },
+  "author": "kuppuraj",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.6",
+    "@babel/preset-env": "^7.1.6",
+    "babel-loader": "^8.1.0",
+    "browser-sync": "^2.24.7",
+    "browser-sync-webpack-plugin": "^2.2.2",
+    "browsersync-webpack-plugin": "^0.6.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "cpy-cli": "^3.1.1",
+    "css-loader": "^1.0.1",
+    "mini-css-extract-plugin": "^0.4.5",
+    "node-sass": "^4.13.1",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "postcss": "^7.0.27",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^7.3.1",
+    "script-loader": "^0.7.2",
+    "style-loader": "^0.23.1",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-merge": "^4.2.2",
+    "webpack-notifier": "^1.8.0",
+    "webpack-shell-plugin": "^0.5.0"
+  },
+  "dependencies": {
+  }
+}
