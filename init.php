@@ -73,7 +73,7 @@ class WP_Spotlight {
 
     public function wp_soptlight_add_toolbar_items($admin_bar){
         global $wp_admin_bar;
-        $form = '<div class="ui search focus" style="background-color: rgba(0, 0, 0, 0);position: relative;">
+        $form = '<div class="ui category search focus" style="background-color: rgba(0, 0, 0, 0);position: relative;">
                   <div class="ui left icon input" >
                     <input class="prompt" type="text" id="wp_spotlight_search_box" autocorrect="on" placeholder="ctrl + s to search ..." autofocus style="border-radius: 6px !important;">
                      <img src="'.WP_SPOTLIGHT_SEARCH_URL.'/assets/images/search.svg" style="height: 13px;padding: 11px;position: absolute;opacity: .5;">

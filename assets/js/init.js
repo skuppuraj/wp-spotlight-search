@@ -10,7 +10,8 @@ jQuery(document).ready(function() {
           searchFields   : [
                 'title',
                 'category',
-                'ID'
+                'ID',
+                'description'
               ],
           maxResults : 10,
         });

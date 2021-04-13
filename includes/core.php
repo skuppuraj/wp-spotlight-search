@@ -145,7 +145,9 @@ class WP_Spotlight_Core{
 		            $post_temp['price'] = $currency.' '.$_price;
 
 		        }else{
+		        	$meta = self::get_post_meta( $content['ID'], $key );
 		            $post_temp['title'] = $content['post_title'];
+		            $post_temp['description'] = $meta;
 		        }
 		        $post_temp['url']= 'post.php?post='.$content['ID'].'&action=edit';
 		        array_push($all_post_types, $post_temp);
@@ -154,6 +156,36 @@ class WP_Spotlight_Core{
 		}
 
 		return $all_post_types;
+	}
+
+	public static function get_post_meta( $id, $type ){
+		$keys = get_post_custom_keys( $id );
+		$li_html = '';
+		if ( $keys && in_array($type, array('post','page'))) {
+			foreach ( (array) $keys as $key ) {
+				$keyt = trim( $key );
+				if ( is_protected_meta( $keyt, 'post' ) ) {
+					continue;
+				}
+
+				$values = array_map( 'trim', get_post_custom_values( $key, $id ) );
+				$value  = implode( ', ', $values );
+
+				$html = sprintf(
+					"%s %s\n",
+					/* translators: %s: Post custom field name. */
+					sprintf( _x( '%s=', 'Post custom field name' ), $key ),
+					$value
+				);
+				
+				$li_html .= $html;
+			}
+			if ( $li_html ) {
+				$li_html = 'Meta values: '.$li_html;
+			}
+		}
+
+		return $li_html;
 	}
 
 	public static function get_all_users(){
