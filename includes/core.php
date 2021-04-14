@@ -5,7 +5,7 @@ class WP_Spotlight_Core{
 	public static function get_searchabel_post_types_checkbox(){
 		$other_types[0] = array('type'=>'users', 'label' => 'Users');
 		$other_types[1] = array('type'=>'comments', 'label' => 'Comments');
-		$other_types[2] = array('type'=>'post_meta', 'label' => 'Post meta (E.g: Advanced Custom Fields)');
+		$other_types[2] = array('type'=>'post_meta', 'label' => 'Search post by post meta (E.g: Advanced Custom Fields)');
 	    $searchabel_post_type = WP_Spotlight_Core::get_searchabel_post_types();
 	    $response = '';
 	    $wp_spotlight_settings = WP_Spotlight_Core::wp_spotlight_search_include_options();

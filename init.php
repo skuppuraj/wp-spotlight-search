@@ -114,7 +114,7 @@ class WP_Spotlight {
         if ($admin_notices == false && !(isset($_GET['page']) && $_GET['page'] == 'wp_spotlight_menu' )) {
             ?>
                <div class="notice notice-success">
-                   <p><?php _e( 'Yay! Introduced Post meta search ability.! Check your <span style="font-weight: 700;">WP Spotlight search</span> preferences <a href="admin.php?page=wp_spotlight_menu">here</a>', WP_SPOTLIGHT_SEARCH_NAME ); ?></p>
+                   <p><?php _e( 'Yay! The new option brings you to search the post by post meta.! Check your <span style="font-weight: 700;">WP Spotlight search</span> preferences <a href="admin.php?page=wp_spotlight_menu">here</a>', WP_SPOTLIGHT_SEARCH_NAME ); ?></p>
                </div>
                <?php
         }
