@@ -73,40 +73,7 @@ class WP_Spotlight_Core{
 	public static function get_searchable_menu(){
 		global $submenu, $menu;
 		$full_array = array();
-		$join = array();
-		foreach ($menu as $key => $value) {
-		    $home_url_part = pathinfo( $value[2]);
-		    if (!empty($submenu[$value[2]])) {
-		        foreach ($submenu[$value[2]] as $k => $v) {
-		            $temp = array();
-		            $temp['title']= $v[0];
-		            $temp['url']= $v[2];
-		            $temp['parent_url'] = $value[2];
-		            $temp['category'] = $value[0];
-		            $html_url_parts = pathinfo( $temp['url']);
-		            $parent_url_parts = pathinfo( $temp['parent_url']);
-		            if ((empty($html_url_parts['extension']) && empty($parent_url_parts['extension']))) {
-		                $temp['url'] = 'admin.php?page='. $temp['url'];
-		            }elseif (empty($html_url_parts['extension']) && ( !empty($parent_url_parts['extension']) && $parent_url_parts['extension'] == 'php')){
-		                $temp['url'] = $temp['parent_url'].'?page='.$temp['url'];
-		            }elseif (empty($html_url_parts['extension']) && ( !empty($parent_url_parts['extension']))) {
-		                $temp['url'] = $temp['parent_url'].'&'.$temp['url'];
-		            }
-		            array_push($full_array, $temp);
-		        }
-		    }elseif(!empty($value[0])){
-		        $temp = array();
-		        $temp['title']= $value[0];
-		        if (empty($home_url_part['extension'])) {
-		            $temp['url'] = 'admin.php?page='. $value[2];  
-		        }else{
-		            $temp['url']= $value[2];
-		        }
-		        $temp['category'] = $value[0];
-		        array_push($full_array, $temp);
-		    }
-		
-		}
+		$full_array = self::menu_structure($menu, $submenu);
 		return $full_array;
 	}
 
@@ -262,6 +229,103 @@ class WP_Spotlight_Core{
 
 	public static function wp_spotlight_save_admin_notice(){
 		 update_option('wp_spotlight_admin_notice', 1);
+	}
+
+	private static function menu_structure( $menu, $submenu, $submenu_as_parent = true ) {
+		$full_array = array();
+		$first = true;
+		// 0 = menu_title, 1 = capability, 2 = menu_slug, 3 = page_title, 4 = classes, 5 = hookname, 6 = icon_url
+		foreach ( $menu as $key => $item ) {
+			if ($item[0] == '') {
+				continue;
+			}
+
+			$submenu_items = array();
+			if ( ! empty( $submenu[ $item[2] ] ) ) {
+				$submenu_items = $submenu[ $item[2] ];
+			}
+
+			$title = wptexturize( $item[0] );
+			$temp = array();
+			$temp['title']= $title;
+            $temp['category'] = $item[0];
+			if ( $submenu_as_parent && ! empty( $submenu_items ) ) {
+				$submenu_items = array_values( $submenu_items );  // Re-index.
+				$menu_hook     = get_plugin_page_hook( $submenu_items[0][2], $item[2] );
+				$menu_file     = $submenu_items[0][2];
+				$pos           = strpos( $menu_file, '?' );
+				if ( false !== $pos ) {
+					$menu_file = substr( $menu_file, 0, $pos );
+				}
+				if ( ! empty( $menu_hook ) || ( ( 'index.php' != $submenu_items[0][2] ) && file_exists( WP_PLUGIN_DIR . "/$menu_file" ) && ! file_exists( ABSPATH . "/wp-admin/$menu_file" ) ) ) {
+	            	$temp['url']= 'admin.php?page='.$submenu_items[0][2];
+					$full_array [] = $temp;
+				} else {
+	            	$temp['url']= $submenu_items[0][2];
+					$full_array [] = $temp;
+				}
+			} elseif ( ! empty( $item[2] ) && current_user_can( $item[1] ) ) {
+				$menu_hook = get_plugin_page_hook( $item[2], 'admin.php' );
+				$menu_file = $item[2];
+				$pos       = strpos( $menu_file, '?' );
+				if ( false !== $pos ) {
+					$menu_file = substr( $menu_file, 0, $pos );
+				}
+				if ( ! empty( $menu_hook ) || ( ( 'index.php' != $item[2] ) && file_exists( WP_PLUGIN_DIR . "/$menu_file" ) && ! file_exists( ABSPATH . "/wp-admin/$menu_file" ) ) ) {
+					$temp['url']= 'admin.php?page='.$item[2];
+					$full_array [] = $temp;
+				} else {
+					$temp['url']= $item[2];
+					$full_array [] = $temp;
+				}
+			}
+
+			if ( ! empty( $submenu_items ) ) {
+
+				$first = true;
+
+				foreach ( $submenu_items as $sub_key => $sub_item ) {
+				// 0 = menu_title, 1 = capability, 2 = menu_slug, 3 = page_title, 4 = classes
+
+					$menu_file = $item[2];
+
+					$pos = strpos( $menu_file, '?' );
+					if ( false !== $pos ) {
+						$menu_file = substr( $menu_file, 0, $pos );
+					}
+
+					$menu_hook = get_plugin_page_hook( $sub_item[2], $item[2] );
+					$sub_file  = $sub_item[2];
+					$pos       = strpos( $sub_file, '?' );
+					if ( false !== $pos ) {
+						$sub_file = substr( $sub_file, 0, $pos );
+					}
+
+					$title = wptexturize( $sub_item[0] );
+					$temp = array();
+					$temp['title']= $title;
+		            $temp['category'] = $item[0];
+
+					if ( ! empty( $menu_hook ) || ( ( 'index.php' != $sub_item[2] ) && file_exists( WP_PLUGIN_DIR . "/$sub_file" ) && ! file_exists( ABSPATH . "/wp-admin/$sub_file" ) ) ) {
+						// If admin.php is the current page or if the parent exists as a file in the plugins or admin dir
+						if ( ( ! $admin_is_parent && file_exists( WP_PLUGIN_DIR . "/$menu_file" ) && ! is_dir( WP_PLUGIN_DIR . "/{$item[2]}" ) ) || file_exists( $menu_file ) ) {
+							$sub_item_url = add_query_arg( array( 'page' => $sub_item[2] ), $item[2] );
+						} else {
+							$sub_item_url = add_query_arg( array( 'page' => $sub_item[2] ), 'admin.php' );
+						}
+
+						$sub_item_url = esc_url( $sub_item_url );
+						$temp['url']= $sub_item_url;
+						$full_array [] = $temp;
+					} else {
+						$temp['url']= $sub_item[2];
+						$full_array [] = $temp;
+					}
+				}
+			}
+		}
+
+		return $full_array;
 	}
 
 }
