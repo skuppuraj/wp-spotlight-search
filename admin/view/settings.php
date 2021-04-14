@@ -1,4 +1,4 @@
-<div><h1 class="wp-spotlight-settings-main-title" style="display: inline-block;"><?php _e( 'WP Spotlight Search Settings',  WP_SPOTLIGHT_SEARCH_NAME); ?></h1><a href="https://wordpress.org/support/plugin/wp-spotlight-search/reviews/#new-post" style="color: #23282d;text-decoration: none;" target="_blank"><img src="<?php echo WP_SPOTLIGHT_SEARCH_URL?>/assets/images/rating.png" style="height: 25px;padding-left: 5px;"> Rate this plugin
+<div><h1 class="wp-spotlight-settings-main-title" style="display: inline-block;"><?php _e( 'WP Spotlight Search Settings',  WP_SPOTLIGHT_SEARCH_NAME); ?></h1><a href="https://wordpress.org/support/plugin/wp-spotlight-search/reviews/#new-post" style="color: #23282d;text-decoration: none;" target="_blank"><img src="<?php echo WP_SPOTLIGHT_SEARCH_URL?>/assets/images/rating.png" style="height: 25px;padding-left: 5px;"> Share your experience
 </a>
 </div>
 	<h4>You can control all search functionalities here. You can search following items by ID, Title and Name.</h4>
@@ -30,9 +30,9 @@
 								<span>
 									<img draggable="false" class="emoji" alt="😀" src="https://s.w.org/images/core/emoji/11/svg/1f600.svg">
 								</span>
-								<input type="submit" class="button-primary" value="Support 💰">
+								<input type="submit" class="button-primary" value="Support me 💰">
 							</div>
-							<div style="margin:10px;">Contribute from $1 dollar</div>
+							<div style="margin:10px;font-weight: 700">Contribute from $1 dollar</div>
 						</div>
 					</td>
 				</tr>
