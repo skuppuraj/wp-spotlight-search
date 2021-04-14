@@ -5,6 +5,7 @@ class WP_Spotlight_Core{
 	public static function get_searchabel_post_types_checkbox(){
 		$other_types[0] = array('type'=>'users', 'label' => 'Users');
 		$other_types[1] = array('type'=>'comments', 'label' => 'Comments');
+		$other_types[2] = array('type'=>'post_meta', 'label' => 'Post meta');
 	    $searchabel_post_type = WP_Spotlight_Core::get_searchabel_post_types();
 	    $response = '';
 	    $wp_spotlight_settings = WP_Spotlight_Core::wp_spotlight_search_include_options();
@@ -145,9 +146,11 @@ class WP_Spotlight_Core{
 		            $post_temp['price'] = $currency.' '.$_price;
 
 		        }else{
-		        	$meta = self::get_post_meta( $content['ID'], $key );
+		        	$meta = self::get_post_meta( $content['ID'], $key, $wp_spotlight_setting );
 		            $post_temp['title'] = $content['post_title'];
-		            $post_temp['description'] = $meta;
+		            if ( $meta != '' ) {
+		            	$post_temp['description'] = $meta;
+		            }
 		        }
 		        $post_temp['url']= 'post.php?post='.$content['ID'].'&action=edit';
 		        array_push($all_post_types, $post_temp);
@@ -158,9 +161,12 @@ class WP_Spotlight_Core{
 		return $all_post_types;
 	}
 
-	public static function get_post_meta( $id, $type ){
-		$keys = get_post_custom_keys( $id );
+	public static function get_post_meta( $id, $type, $wp_spotlight_setting ){
 		$li_html = '';
+		if ( !in_array( 'post_meta', $wp_spotlight_setting ) ) {
+			return 	$li_html;
+		}
+		$keys = get_post_custom_keys( $id );
 		if ( $keys && in_array($type, array('post','page'))) {
 			foreach ( (array) $keys as $key ) {
 				$keyt = trim( $key );
