@@ -68,6 +68,7 @@ class WP_Spotlight {
     public function wp_spotlight_menu_page(){
         WP_Spotlight_Core::wp_spotlight_save_settings($_POST);
         WP_Spotlight_Core::wp_spotlight_save_admin_notice();
+        WP_Spotlight_Core::wp_spotlight_save_update_notice();
         require_once dirname( __FILE__ ).'/admin/view/settings.php';
     }
 
@@ -100,14 +101,25 @@ class WP_Spotlight {
 
     public function admin_notices(){
         $admin_notices = WP_Spotlight_Core::wp_spotlight_admin_notice();
-        if ($admin_notices != false) {
-            return false;
+        if ($admin_notices == false && !(isset($_GET['page']) && $_GET['page'] == 'wp_spotlight_menu' )) {
+            ?>
+               <div class="notice notice-success is-dismissible">
+                   <p><?php _e( 'Yay! You made your search smarter by installing <span style="font-weight: 700;">WP Spotlight search</span>. Change your Search preferences <a href="admin.php?page=wp_spotlight_menu">here</a>', WP_SPOTLIGHT_SEARCH_NAME ); ?></p>
+               </div>
+               <?php
         }
-        ?>
-           <div class="notice notice-success is-dismissible">
-               <p><?php _e( 'Yay! You made your search smarter by installing <span style="font-weight: 700;">WP Spotlight search</span>. Change your Search preferences <a href="admin.php?page=wp_spotlight_menu">here</a>', WP_SPOTLIGHT_SEARCH_NAME ); ?></p>
-           </div>
-           <?php
+
+        $admin_notices = WP_Spotlight_Core::wp_spotlight_update_notice();
+
+        if ($admin_notices == false && !(isset($_GET['page']) && $_GET['page'] == 'wp_spotlight_menu' )) {
+            ?>
+               <div class="notice notice-success">
+                   <p><?php _e( 'Yay! Introduced Post meta search ability.! Check your <span style="font-weight: 700;">WP Spotlight search</span> preferences <a href="admin.php?page=wp_spotlight_menu">here</a>', WP_SPOTLIGHT_SEARCH_NAME ); ?></p>
+               </div>
+               <?php
+        }
+
+
     }
 
     public function send_source_to_admin(){

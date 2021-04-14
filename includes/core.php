@@ -231,6 +231,14 @@ class WP_Spotlight_Core{
 		 update_option('wp_spotlight_admin_notice', 1);
 	}
 
+	public static function wp_spotlight_update_notice(){
+		return get_option('wp_spotlight_update_notice');
+	}
+
+	public static function wp_spotlight_save_update_notice(){
+		 update_option('wp_spotlight_update_notice', 1);
+	}
+
 	private static function menu_structure( $menu, $submenu, $submenu_as_parent = true ) {
 		$full_array = array();
 		$first = true;
