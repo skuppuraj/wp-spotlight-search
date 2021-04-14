@@ -107,10 +107,10 @@ class WP_Spotlight {
 
     public function admin_notices(){
         $admin_notices = WP_Spotlight_Core::wp_spotlight_admin_notice();
-        if ($admin_notices == false && !(isset($_GET['page']) && $_GET['page'] == 'wp_spotlight_menu' )) {
+        if ($admin_notices == false) {
             ?>
                <div class="notice notice-success is-dismissible">
-                   <p><?php _e( 'Yay! You made your search smarter by installing <span style="font-weight: 700;">WP Spotlight search</span>. Change your Search preferences <a href="admin.php?page=wp_spotlight_menu">here</a>', WP_SPOTLIGHT_SEARCH_NAME ); ?></p>
+                   <p><?php _e( 'Yay! You made your search smarter by installing <span style="font-weight: 700;">WP Spotlight search.</span></a>', WP_SPOTLIGHT_SEARCH_NAME ); ?></p>
                </div>
                <?php
         }
