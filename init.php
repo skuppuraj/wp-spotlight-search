@@ -39,8 +39,13 @@ class WP_Spotlight {
 
         require_once WP_SPOTLIGHT_SEARCH_DIR . '/includes/core.php';
 
+        register_activation_hook( __FILE__, array( $this, 'activation' ) );
         register_deactivation_hook( __FILE__, array($this, 'deactivate') );
 
+    }
+
+    public function activation() {
+        set_transient( '_wp_spotlight_setting_redirect_on_activation', true, 30 );
     }
 
     public function deactivate() {
@@ -53,6 +58,7 @@ class WP_Spotlight {
         add_action( 'admin_enqueue_scripts', array($this, 'wp_spotlight_enqueue') );
         add_action( 'wp_before_admin_bar_render', array($this, 'wp_soptlight_add_toolbar_items'), 999999999);
         add_action( 'admin_footer', array($this, 'send_source_to_admin'), 999999999);
+        add_action( 'admin_init', array($this, 'setting_page_redirect_on_activation') );
     }
 
     private function add_filter(){
@@ -160,6 +166,20 @@ class WP_Spotlight {
         }
         
         return $links;
+    }
+
+    public function setting_page_redirect_on_activation(){
+        if ( ! get_transient( '_wp_spotlight_setting_redirect_on_activation' ) ) {
+            return;
+        }
+
+        delete_transient( '_wp_spotlight_setting_redirect_on_activation' );
+
+        if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) {
+            return;
+        }
+
+        wp_redirect(admin_url( 'admin.php?page=wp_spotlight_menu' ));
     }
 }
 
