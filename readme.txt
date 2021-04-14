@@ -42,6 +42,12 @@ All you have to do is check the option to make it searchable.
 
 == Changelog ==
 
+= 1.1.0  - 14th April 2021 =
+* Feature: The new option brings you to search post meta (E.g: Advanced Custom fields)
+* Improvement: Menu finding ability improved. 
+* Improvement: Search library updated
+* Fix: Plugin search results linking to incorrect URLs for certain menus.
+
 = 1.0.2  - 05th Jul 2020 =
 * Fix: Theme Customizer page load stuck due to the Java Script error.
 
