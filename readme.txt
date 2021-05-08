@@ -2,7 +2,7 @@
 Contributors: rajkuppus
 Tags: admin search, ajax search, menu search, dashboard, wp-admin, wp admin dashboard,custom menu search, Manage WordPress, WordPress manager, dashboard search, quick search, fast search
 Requires at least: 3.1
-Tested up to: 5.4.2
+Tested up to: 5.7.1
 Stable tag: trunk
 
 WP Admin/Dashboard Search Spotlight Global Search is a powerful quick navigation plugin for WordPress Dashboard - it is an advancement of the default WordPress dashboard search.
