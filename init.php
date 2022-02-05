@@ -4,7 +4,7 @@ Plugin Name: WP Spotlight Search
 Plugin URI: https://wordpress.org/plugins/wp-spotlight-search/
 Description: WP Spotlight search is a powerful global utility search plugin for WordPress Dashboard - it is an advancement of the default WordPress dashboard search.
 Author: Kuppuraj
-Version: 1.0.2
+Version: 1.1.0
 Author URI: https://github.com/skuppuraj
 
 */
@@ -27,7 +27,7 @@ class WP_Spotlight {
     }
 
     private function constants(){
-        define( 'WP_SPOTLIGHT_SEARCH_VERSION', '1.0.2' );
+        define( 'WP_SPOTLIGHT_SEARCH_VERSION', '1.1.0' );
         define( 'WP_SPOTLIGHT_SEARCH_NAME', 'wp-spotlight-search' );
         define( 'WP_SPOTLIGHT_SEARCH_URL', plugin_dir_url( __FILE__ ) );
         define( 'WP_SPOTLIGHT_SEARCH_DIR', dirname( __FILE__ ) );
@@ -39,8 +39,13 @@ class WP_Spotlight {
 
         require_once WP_SPOTLIGHT_SEARCH_DIR . '/includes/core.php';
 
+        register_activation_hook( __FILE__, array( $this, 'activation' ) );
         register_deactivation_hook( __FILE__, array($this, 'deactivate') );
 
+    }
+
+    public function activation() {
+        set_transient( '_wp_spotlight_setting_redirect_on_activation', true, 30 );
     }
 
     public function deactivate() {
@@ -53,6 +58,7 @@ class WP_Spotlight {
         add_action( 'admin_enqueue_scripts', array($this, 'wp_spotlight_enqueue') );
         add_action( 'wp_before_admin_bar_render', array($this, 'wp_soptlight_add_toolbar_items'), 999999999);
         add_action( 'admin_footer', array($this, 'send_source_to_admin'), 999999999);
+        add_action( 'admin_init', array($this, 'setting_page_redirect_on_activation') );
     }
 
     private function add_filter(){
@@ -68,12 +74,13 @@ class WP_Spotlight {
     public function wp_spotlight_menu_page(){
         WP_Spotlight_Core::wp_spotlight_save_settings($_POST);
         WP_Spotlight_Core::wp_spotlight_save_admin_notice();
+        WP_Spotlight_Core::wp_spotlight_save_update_notice();
         require_once dirname( __FILE__ ).'/admin/view/settings.php';
     }
 
     public function wp_soptlight_add_toolbar_items($admin_bar){
         global $wp_admin_bar;
-        $form = '<div class="ui search focus" style="background-color: rgba(0, 0, 0, 0);position: relative;">
+        $form = '<div class="ui category search focus" style="background-color: rgba(0, 0, 0, 0);position: relative;">
                   <div class="ui left icon input" >
                     <input class="prompt" type="text" id="wp_spotlight_search_box" autocorrect="on" placeholder="ctrl + s to search ..." autofocus style="border-radius: 6px !important;">
                      <img src="'.WP_SPOTLIGHT_SEARCH_URL.'/assets/images/search.svg" style="height: 13px;padding: 11px;position: absolute;opacity: .5;">
@@ -100,14 +107,25 @@ class WP_Spotlight {
 
     public function admin_notices(){
         $admin_notices = WP_Spotlight_Core::wp_spotlight_admin_notice();
-        if ($admin_notices != false) {
-            return false;
+        if ($admin_notices == false) {
+            ?>
+               <div class="notice notice-success is-dismissible">
+                   <p><?php _e( 'Yay! You made your search smarter by installing <span style="font-weight: 700;">WP Spotlight search.</span></a>', WP_SPOTLIGHT_SEARCH_NAME ); ?></p>
+               </div>
+               <?php
         }
-        ?>
-           <div class="notice notice-success is-dismissible">
-               <p><?php _e( 'Yay! You made your search smarter by installing <span style="font-weight: 700;">WP Spotlight search</span>. Change your Search preferences <a href="admin.php?page=wp_spotlight_menu">here</a>', WP_SPOTLIGHT_SEARCH_NAME ); ?></p>
-           </div>
-           <?php
+
+        $admin_notices = WP_Spotlight_Core::wp_spotlight_update_notice();
+
+        if ($admin_notices == false && !(isset($_GET['page']) && $_GET['page'] == 'wp_spotlight_menu' )) {
+            ?>
+               <div class="notice notice-success">
+                   <p><?php _e( 'Yay! The new option brings you to search the post by post meta.! Check your <span style="font-weight: 700;">WP Spotlight search</span> preferences <a href="admin.php?page=wp_spotlight_menu">here</a>', WP_SPOTLIGHT_SEARCH_NAME ); ?></p>
+               </div>
+               <?php
+        }
+
+
     }
 
     public function send_source_to_admin(){
@@ -148,6 +166,20 @@ class WP_Spotlight {
         }
         
         return $links;
+    }
+
+    public function setting_page_redirect_on_activation(){
+        if ( ! get_transient( '_wp_spotlight_setting_redirect_on_activation' ) ) {
+            return;
+        }
+
+        delete_transient( '_wp_spotlight_setting_redirect_on_activation' );
+
+        if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) {
+            return;
+        }
+
+        wp_redirect(admin_url( 'admin.php?page=wp_spotlight_menu' ));
     }
 }
 
