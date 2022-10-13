@@ -1,15 +1,15 @@
-=== WP Admin/Dashboard Spotlight Search ===
+=== Advanced All in One Admin Search by WP Spotlight ===
 Contributors: rajkuppus
 Tags: admin search, ajax search, menu search, dashboard, wp-admin, wp admin dashboard,custom menu search, Manage WordPress, WordPress manager, dashboard search, quick search, fast search
 Requires at least: 3.1
-Tested up to: 5.4.2
+Tested up to: 5.7.2
 Stable tag: trunk
 
-WP Admin/Dashboard Spotlight Global Search is a powerful quick navigation plugin for WordPress Dashboard - it is an advancement of the default WordPress dashboard search.
+Advanced All in One Admin Search by WP Spotlight Global Search is a powerful quick navigation plugin for WordPress Dashboard - it is an advancement of the default WordPress dashboard search.
 
 == Description ==
 
-WP Admin/Dashboard Spotlight is a powerful global quick navigation search plugin for WordPress Dashboard - it is an advancement of the default WordPress dashboard search.
+Advanced All in One Admin Search by WP Spotlight is a powerful global quick navigation search plugin for WordPress Dashboard - it is an advancement of the default WordPress dashboard search.
 
 You can configure it to search anything on your WordPress Dashboard like pages, posts, comments, orders, users and many more options.
 
@@ -42,14 +42,17 @@ All you have to do is check the option to make it searchable.
 
 == Changelog ==
 
+= 1.1.1  - 8th April 2021 =
+* Fix: undefined variable $admin_is_parent. (Thanks a tonne to @theprinze for reporting)
+
 = 1.1.0  - 14th April 2021 =
 * Feature: The new option brings you to search the post by post meta (E.g: Advanced Custom fields)
 * Improvement: Menu finding ability improved. 
 * Improvement: Search library updated
-* Fix: Plugin search results linking to incorrect URLs for certain menus.
+* Fix: Plugin search results linking to incorrect URLs for certain menus.(Thanks a tonne to @sofrlowi for reporting)
 
 = 1.0.2  - 05th Jul 2020 =
-* Fix: Theme Customizer page load stuck due to the Java Script error.
+* Fix: Theme Customizer page load stuck due to the Java Script error.(Thanks a tonne to @ginhofresh for reporting)
 
 = 1.0.1  - 28th Sep 2018 =
 * Improvement: Global shortcut key added for all browsers and all OS's
