@@ -1,0 +1,17 @@
+{
+    "name": "wps/wp-spotlight-search",
+    "description": "Replacement of default WordPress search",
+    "authors": [
+        {
+            "name": "rajkuppu",
+            "email": "kuppuraj@live.in"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "WP_SPOTLIGHT\\": "includes/"
+        }
+    },
+    "require": {},
+    "prefer-stable": true
+}

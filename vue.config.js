@@ -1,33 +1,69 @@
 const devPort = 8081;
-process.env.VUE_APP_VERSION = require('./package.json').version;
+const WebpackShellPluginNext = require("webpack-shell-plugin-next");
+process.env.VUE_APP_VERSION = require("./package.json").version;
+const productionDir = "./dist";
+const outPath = `${productionDir}/wp-spotlight-search`;
+const zipName = `wp-spotlight-search-${process.env.VUE_APP_VERSION}.zip`;
+let production = [];
+const isProduction = process.env.NODE_ENV === "production";
+
+if (isProduction) {
+  production.push(
+    new WebpackShellPluginNext({
+      onBuildStart: {
+        scripts: ["rm -rf " + productionDir + " && mkdir -p " + productionDir],
+        blocking: true,
+        parallel: false,
+      },
+      onBuildEnd: {
+        scripts: [
+          "npx cpy --parents '.' '!./public' '!./dist/favicon.ico' '!./dist/index.html' !./src !./src/**/scss '!./config' '!./tests' '!./cypress' '!./**/node_modules' '!./**/__debugger1.php' '!./vue.config.js' '!./babel.config.js' '!./_dev_config.php' '!./webpack.config.js' '!./postcss.config.js' '!./package.json' '!./package-lock.json' '!./composer.json' '!./composer.lock' '!./cypress.json' '!./e2e' '!./jsconfig.json' " +
+            outPath +
+            " && cd " +
+            productionDir +
+            " && zip --recurse-paths " +
+            zipName +
+            " ./wp-spotlight-search",
+        ],
+        blocking: false,
+        parallel: true,
+      },
+    })
+  );
+}
 
 module.exports = {
   devServer: {
     hot: true,
-    writeToDisk: true,
     liveReload: false,
-    sockPort: devPort,
+    headers: { "Access-Control-Allow-Origin": "*" },
     port: devPort,
-    headers: { 'Access-Control-Allow-Origin': '*' },
+    devMiddleware: {
+      writeToDisk: true,
+    },
+    allowedHosts: "all",
   },
   publicPath:
-    process.env.NODE_ENV === 'production'
-      ? process.env.ASSET_PATH || '/'
+    process.env.NODE_ENV === "production"
+      ? process.env.ASSET_PATH || "/"
       : `http://localhost:${devPort}/`,
   configureWebpack: {
     output: {
-      filename: `app-${process.env.VUE_APP_VERSION}.js`,
-      hotUpdateChunkFilename: 'hot/hot-update.js',
-      hotUpdateMainFilename: 'hot/hot-update.json',
+      clean: true,
+      filename: `js/wp-spotlight-search-${process.env.VUE_APP_VERSION}.js`,
+      hotUpdateChunkFilename: "hot/hot-update.js",
+      hotUpdateMainFilename: "hot/hot-update.json",
     },
     optimization: {
       splitChunks: false,
     },
+    plugins: production,
   },
   filenameHashing: true,
   css: {
     extract: {
-      filename: `app-${process.env.VUE_APP_VERSION}.css`,
+      filename: `css/wp-spotlight-search-${process.env.VUE_APP_VERSION}.css`,
     },
   },
+  productionSourceMap: false,
 };
