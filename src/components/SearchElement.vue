@@ -103,27 +103,28 @@
   </div>
 </template>
 <script>
-import api from "../api/API";
-import { ShadowRoot } from "vue-shadow-dom";
-import Fuse from "fuse.js";
-import _ from "lodash";
-import SearchFooter from "./SearchFooter";
-import ShadowOwnStyle from "./ShadowOwnStyle";
+import { ShadowRoot } from 'vue-shadow-dom';
+import Fuse from 'fuse.js';
+import _ from 'lodash';
+import api from '../api/API';
+import SearchFooter from './SearchFooter.vue';
+import ShadowOwnStyle from './ShadowOwnStyle.vue';
+
 export default {
-  name: "SearchElement",
+  name: 'SearchElement',
   data() {
     return {
       categories: {},
-      search: "",
+      search: '',
       activeCategories: [],
       list: [],
       finderResult: [],
       searchOption: {
         keys: [
-          { name: "title", weight: 0.1 },
-          { name: "email", weight: 0.1 },
-          { name: "ID", weight: 0.1 },
-          { name: "role", weight: 0.1 },
+          { name: 'title', weight: 0.1 },
+          { name: 'email', weight: 0.1 },
+          { name: 'ID', weight: 0.1 },
+          { name: 'role', weight: 0.1 },
         ],
         includeMatches: true,
         includeScore: true,
@@ -184,7 +185,7 @@ export default {
     this.finderResult = this.recent_search;
   },
   created() {
-    document.addEventListener.call(window, "wp_spotlight_dialog_open", () => {
+    document.addEventListener.call(window, 'wp_spotlight_dialog_open', () => {
       if (this.$refs.search != null) {
         this.$refs.search.focus();
         this.selectAll();
@@ -194,8 +195,8 @@ export default {
   },
   methods: {
     getInit() {
-      let request = {
-        action: "get_init",
+      const request = {
+        action: 'get_init',
       };
       api.post(request).then((response) => {
         if (response.data.post_types) {
@@ -204,18 +205,19 @@ export default {
       });
     },
     finder(value) {
-      let fuse = new Fuse(this.list, this.searchOption);
-      let result = fuse.search(value);
+      const fuse = new Fuse(this.list, this.searchOption);
+      const result = fuse.search(value);
       if (value.length >= 1) {
         this.resetFinderResult(true);
       }
+      // eslint-disable-next-line consistent-return
       _.forEach(result, (itemList, lKey) => {
-        if (lKey == 20) {
+        if (lKey === 20) {
           return false;
         }
         if (
-          this.activeCategories.length > 0 &&
-          _.indexOf(this.activeCategories, itemList.item.type) == -1
+          this.activeCategories.length > 0
+          && _.indexOf(this.activeCategories, itemList.item.type) == -1
         ) {
           return;
         }
@@ -225,8 +227,8 @@ export default {
       console.log(this.finderResult);
     },
     triggerSearch() {
-      let request = {
-        action: "fire_search",
+      const request = {
+        action: 'fire_search',
         search: this.search,
       };
       request.activeCategories = [];
@@ -236,29 +238,27 @@ export default {
       });
     },
     isAllCategory(type) {
-      return _.indexOf(this.activeCategories, type) !== -1 ? true : false;
+      return _.indexOf(this.activeCategories, type) !== -1;
     },
     categoryClick(type) {
-      let index = _.indexOf(this.activeCategories, type);
+      const index = _.indexOf(this.activeCategories, type);
       if (index !== -1) {
-        _.remove(this.activeCategories, (n) => {
-          return n == type;
-        });
+        _.remove(this.activeCategories, (n) => n == type);
       } else {
         this.activeCategories.push(type);
       }
       this.saveChoosenCategory();
     },
     saveChoosenCategory() {
-      let request = {
-        action: "save_category",
+      const request = {
+        action: 'save_category',
         activeCategories: this.activeCategories,
       };
       api.post(request);
     },
     optionsTitle(type_key) {
-      let title = "";
-      if (type_key == "menu") {
+      let title = '';
+      if (type_key == 'menu') {
         title = this.translatedStrings.admin_category_title;
       } else {
         title = _.find(this.categories, { type: type_key });
@@ -270,17 +270,16 @@ export default {
       let matchIndex = {};
       let addIndice = 0;
       matchIndex = _.find(matches, { key: type });
-      if (typeof matchIndex != "undefined") {
+      if (typeof matchIndex !== 'undefined') {
         _.forEach(matchIndex.indices, (indice) => {
-          let addOne = 1;
-          let newIndiceStart = indice[0] + addIndice;
-          let newIndiceEnd = indice[1] + addIndice + addOne;
+          const addOne = 1;
+          const newIndiceStart = indice[0] + addIndice;
+          const newIndiceEnd = indice[1] + addIndice + addOne;
           let chr = value.slice(newIndiceStart, newIndiceEnd);
           chr = `<strong>${chr}</strong>`;
-          value =
-            value.substring(0, newIndiceStart) +
-            chr +
-            value.substring(newIndiceEnd);
+          value = value.substring(0, newIndiceStart)
+            + chr
+            + value.substring(newIndiceEnd);
           addIndice += 17; // 17 is strong tag length
         });
       }
@@ -304,13 +303,13 @@ export default {
       this.scrollIntoView();
     },
     openLink() {
-      let selected = this.finderResult[this.navigationIndex];
+      const selected = this.finderResult[this.navigationIndex];
       this.saveRecentSearch(selected);
       window.location = this.generateHref(selected.item.url);
     },
     scrollIntoView() {
-      let letRef = this.listIDCreate(this.navigationIndex);
-      let el = this.$refs.wpss.shadow_root.getElementById(letRef);
+      const letRef = this.listIDCreate(this.navigationIndex);
+      const el = this.$refs.wpss.shadow_root.getElementById(letRef);
       if (el != null) {
         el.scrollIntoView(false);
       }
@@ -326,9 +325,9 @@ export default {
       }
     },
     saveRecentSearch(item) {
-      let request = {
-        action: "save_recent",
-        item: item,
+      const request = {
+        action: 'save_recent',
+        item,
       };
       api.post(request);
     },
@@ -343,8 +342,8 @@ export default {
       this.list = _.clone(wp_spotlight_search_object.searchabel_menu_item);
     },
     isWPAdmin() {
-      let path = window.location.pathname;
-      return path.indexOf("wp-admin") != -1 ? true : false;
+      const path = window.location.pathname;
+      return path.indexOf('wp-admin') != -1;
     },
     generateHref(url) {
       if (this.isAdmin) {
@@ -357,10 +356,10 @@ export default {
     },
     closeModal() {
       if (this.search) {
-        this.search = "";
+        this.search = '';
       } else {
-        var event = new CustomEvent("wp_spotlight_dialog_close", {
-          detail: "Example of an event",
+        const event = new CustomEvent('wp_spotlight_dialog_close', {
+          detail: 'Example of an event',
         });
 
         // Dispatch/Trigger/Fire the event

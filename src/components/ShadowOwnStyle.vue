@@ -95,9 +95,10 @@
 </template>
 
 <script>
-import { ShadowStyle } from "vue-shadow-dom";
+import { ShadowStyle } from 'vue-shadow-dom';
+
 export default {
-  name: "ShadowOwnStyle",
+  name: 'ShadowOwnStyle',
   components: {
     ShadowStyle,
   },

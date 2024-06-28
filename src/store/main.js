@@ -1,16 +1,12 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia';
 
 export const useMainStore = defineStore({
-  id: "main",
-  state: () => {
-    return {
-      ajaxRef: [],
-    };
-  },
+  id: 'main',
+  state: () => ({
+    ajaxRef: [],
+  }),
   getters: {
-    getRefByAction: (state) => {
-      return (action) => state.ajaxRef.find(action);
-    },
+    getRefByAction: (state) => (action) => state.ajaxRef.find(action),
   },
   actions: {
     setRefByAction(action, obj) {

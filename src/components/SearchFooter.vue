@@ -16,12 +16,12 @@
 
 <script>
 export default {
-  name: "SearchFooter",
+  name: 'SearchFooter',
   data() {
     return {
       url: {
         rating:
-          "https://wordpress.org/support/plugin/wp-spotlight-search/reviews/#new-post",
+          'https://wordpress.org/support/plugin/wp-spotlight-search/reviews/#new-post',
       },
     };
   },
