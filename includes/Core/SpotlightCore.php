@@ -303,7 +303,6 @@ class SpotlightCore{
 
 	private function get_shop_orders( $all_post_types, $key, $limit ){
 		$post_content = $this->wpdb->get_results("select id,total_amount,currency from ".$this->wpdb->prefix."wc_orders where type = '".esc_attr($key)."' LIMIT ".$limit, ARRAY_A);
-		file_put_contents(dirname(__FILE__).'/__debugger1.php', var_export($post_content,true)."\n<br><br>\n",FILE_APPEND );
 		if (!empty($post_content)) {
 			foreach ($post_content as $order) {
 				$post_temp = array();
