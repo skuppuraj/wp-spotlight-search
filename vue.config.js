@@ -31,13 +31,18 @@ if (isProduction) {
     })
   );
 }
-
+const fs = require('fs')
 module.exports = {
   devServer: {
     hot: true,
     liveReload: false,
     headers: { "Access-Control-Allow-Origin": "*" },
     port: devPort,
+    https: {
+      key: fs.readFileSync('/Users/apple/Downloads/dev/certs/localhost-key.pem'),
+      cert: fs.readFileSync('/Users/apple/Downloads/dev/certs/localhost.pem'),
+      //ca: fs.readFileSync('./certs/my-ca.crt')
+    },
     devMiddleware: {
       writeToDisk: true,
     },
@@ -46,7 +51,7 @@ module.exports = {
   publicPath:
     process.env.NODE_ENV === "production"
       ? process.env.ASSET_PATH || "/"
-      : `http://localhost:${devPort}/`,
+      : `https://localhost:${devPort}/`,
   configureWebpack: {
     output: {
       clean: true,
