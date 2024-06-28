@@ -26,4 +26,8 @@ jQuery(function ($) {
   document.addEventListener.call(window, "wp_spotlight_dialog_close", () => {
     $("#wp-spotlight-search-dialog").hide();
   });
+  
+  hotkeys.filter = function(event){
+    return true;
+  }
 });
