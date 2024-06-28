@@ -2,8 +2,11 @@
 namespace WP_SPOTLIGHT\Core;
 use WP_SPOTLIGHT\Module\Module;
 class SpotlightCore{
+	private $wpdb;
 
 	public function __construct() {
+		global $wpdb;
+		$this->wpdb = $wpdb;
 		add_filter('wp_spotlight_search_init_inject_search', array($this, 'get_searchable_post'), 10, 1);
 		add_filter('wp_spotlight_search_init_inject_search', array($this, 'get_users'), 11, 1);
 		add_filter('wp_spotlight_search_init_inject_search', array($this, 'get_comments'), 12, 1);
@@ -154,38 +157,39 @@ class SpotlightCore{
 		    }
 		    $post_temp = array();
 		    if ($key == 'shop_order') {
-		        $post_content = $wpdb->get_results("select ID,post_title,post_type from $wpdb->posts where post_type = '".esc_attr($key)."' LIMIT ".$limit, ARRAY_A);
+		        $all_post_types = $this->get_shop_orders($all_post_types, $key, $limit);
 		    }else{
 		        $post_content = $wpdb->get_results("select ID,post_title,post_type from $wpdb->posts where post_status='publish' AND post_type = '".esc_attr($key)."' LIMIT ".$limit, ARRAY_A);   
-		    }
-		    foreach ($post_content as $resultKey => $content) {
-		        $post_temp['type'] = $key;
-		        $post_temp['category'] = $post->label;
-		        $post_temp['ID'] = $content['ID']; 
-				$post_temp['title'] = $content['post_title']; 
-		        if ($key == 'shop_order') {
-		            $meta = get_post_meta($content['ID']);
-		            $_order_currency = $meta['_order_currency'][0];
-		            $_order_total = $meta['_order_total'][0];
-		            $post_temp['price'] = $_order_currency.' '.$_order_total;
-		        }elseif($key == 'product'){
-		            $meta = get_post_meta($content['ID']);
-		            $_price = $meta['_price'][0];
-		            $currency = get_option('woocommerce_currency');
-		            $post_temp['price'] = $currency.' '.$_price;
-
-		        }else{
-		        	$meta = $this->get_post_meta( $content['ID'], $key );
-		            if ( $meta != '' ) {
-		            	$post_temp['description'] = $meta;
-		            }
-		        }
-		        $post_temp['url']= 'post.php?post='.$content['ID'].'&action=edit';
-		        array_push($all_post_types, $post_temp);
+				foreach ($post_content as $resultKey => $content) {
+					$post_temp['type'] = $key;
+					$post_temp['category'] = $post->label;
+					$post_temp['ID'] = $content['ID']; 
+					if (!empty($content['post_title'])) {
+						$post_temp['title'] = $content['post_title']; 
+					}
+					if ($key == 'shop_order') {
+						$meta = get_post_meta($content['ID']);
+						$_order_currency = $meta['_order_currency'][0];
+						$_order_total = $meta['_order_total'][0];
+						$post_temp['price'] = $_order_currency.' '.$_order_total;
+					}elseif($key == 'product'){
+						$meta = get_post_meta($content['ID']);
+						$_price = $meta['_price'][0];
+						$currency = get_option('woocommerce_currency');
+						$post_temp['price'] = $currency.' '.$_price;
+	
+					}else{
+						$meta = $this->get_post_meta( $content['ID'], $key );
+						if ( $meta != '' ) {
+							$post_temp['description'] = $meta;
+						}
+					}
+					$post_temp['url']= 'post.php?post='.$content['ID'].'&action=edit';
+					array_push($all_post_types, $post_temp);
+				}
 		    }
 
 		}
-
 		return $all_post_types;
 	}
 
@@ -295,5 +299,23 @@ class SpotlightCore{
 			return array();
 		}
 		return $menu;
+	}
+
+	private function get_shop_orders( $all_post_types, $key, $limit ){
+		$post_content = $this->wpdb->get_results("select id,total_amount,currency from ".$this->wpdb->prefix."wc_orders where type = '".esc_attr($key)."' LIMIT ".$limit, ARRAY_A);
+		file_put_contents(dirname(__FILE__).'/__debugger1.php', var_export($post_content,true)."\n<br><br>\n",FILE_APPEND );
+		if (!empty($post_content)) {
+			foreach ($post_content as $order) {
+				$post_temp = array();
+				$post_temp['type'] = $key;
+				$post_temp['category'] = 'Orders';
+				$post_temp['title'] = 'Order #'.$order['id'];
+				$post_temp['ID'] = $order['id']; 
+				$post_temp['price'] = $order['currency'].' '.$order['total_amount'];
+				$post_temp['url']= 'admin.php?page=wc-orders&action=edit&id='.$order['id'];
+				array_push($all_post_types, $post_temp);
+			}
+		}
+		return $all_post_types;
 	}
 }
