@@ -184,7 +184,11 @@ class SpotlightCore{
 							$post_temp['description'] = $meta;
 						}
 					}
-					$post_temp['url']= 'post.php?post='.$content['ID'].'&action=edit';
+					if ($key == 'elementor_library') {
+						$post_temp['url']= 'post.php?post='.$content['ID'].'&action=elementor';
+					}else{
+						$post_temp['url']= 'post.php?post='.$content['ID'].'&action=edit';
+					}
 					array_push($all_post_types, $post_temp);
 				}
 		    }
