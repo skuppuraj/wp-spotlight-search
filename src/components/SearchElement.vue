@@ -56,50 +56,56 @@
             >
               Recent searches
             </div>
-            <ul class="options-list" v-if="finderResult.length > 0">
-              <li
-                v-for="(items, iIndex) in finderResult"
-                :key="iIndex"
-                :id="listIDCreate(iIndex)"
-                :class="{ active: iIndex == navigationIndex }"
-                @mouseover="navigationIndex = iIndex"
-                :ref="listIDCreate(iIndex)"
-                @click="saveRecentSearch(items)"
-              >
-                <a :href="generateHref(items['item']['url'])">
-                  <div
-                    class="option-item"
-                    v-html="
-                      generateElementText(
-                        items['item']['title'],
-                        items['matches'],
-                        'title'
-                      )
-                    "
-                  ></div>
-                  <div
-                    class="option-desc"
-                    v-if="items['item']['type'] == 'menu'"
-                    v-html="
-                      generateElementText(
-                        items['item']['parent'],
-                        items['matches'],
-                        'parent'
-                      )
-                    "
-                  ></div>
-                  <div
-                    class="option-desc"
-                    v-if="items['item']['type'] != 'menu'"
-                    v-html="items['item']['category']"
-                  ></div>
-                </a>
-                <div class="arrow-section">
-                  <div class="enter-icon"></div>
-                  <div class="right-arrow"></div>
-                </div>
-              </li>
-            </ul>
+            <div class="search-result-wrapper">
+              <div class="search-container-left">
+                <ul class="options-list" v-if="finderResult.length > 0">
+                  <li
+                    v-for="(items, iIndex) in finderResult"
+                    :key="iIndex"
+                    :id="listIDCreate(iIndex)"
+                    :class="{ active: iIndex == navigationIndex }"
+                    @mouseover="navigationIndex = iIndex"
+                    :ref="listIDCreate(iIndex)"
+                    @click="saveRecentSearch(items)"
+                  >
+                    <a :href="generateHref(items['item']['url'])">
+                      <div
+                        class="option-item"
+                        v-html="
+                          generateElementText(
+                            items['item']['title'],
+                            items['matches'],
+                            'title'
+                          )
+                        "
+                      ></div>
+                      <div
+                        class="option-desc"
+                        v-if="items['item']['type'] == 'menu'"
+                        v-html="
+                          generateElementText(
+                            items['item']['parent'],
+                            items['matches'],
+                            'parent'
+                          )
+                        "
+                      ></div>
+                      <div
+                        class="option-desc"
+                        v-if="items['item']['type'] != 'menu'"
+                        v-html="items['item']['category']"
+                      ></div>
+                    </a>
+                    <div class="arrow-section">
+                      <div class="enter-icon"></div>
+                      <div class="right-arrow"></div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="search-container-right">
+              </div>
+            </div>
           </div>
         </div>
         <search-footer></search-footer>

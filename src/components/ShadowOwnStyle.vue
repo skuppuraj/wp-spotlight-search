@@ -132,11 +132,11 @@
         --monoSpaceFont: "Anonymous Pro", monospace;
     }
     #wpss-main-container {
-        width: 600px;
+        width: 1000px;
         position: fixed;
         top: 100px;
         left: 50%;
-        margin-left: -300px;
+        margin-left: -500px;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
         font-size: 16px;
         background-color: #fff;
@@ -154,10 +154,6 @@
     }
     #wpss-main-container .cmd strong {
         font-weight: 700;
-    }
-    #wpss-main-container .search-container{
-        max-height: 60vh;
-        overflow-y: auto;
     }
     #wpss-main-container label[for="search-box"] {
         background-color: #f1f1f1;
@@ -323,6 +319,21 @@
         width: 10px;
         height: 8px;
         margin: 2px 0 0 3px;
+    }
+    .search-result-wrapper{
+      display: flex;
+    }
+    .search-container-left{
+      width: 50%;
+      position: relative;
+      box-shadow: inset 1px 1px 2px hsla(230, 6%, 60%, .24), inset 2px 2px 8px hsla(230, 6%, 60%, .1);
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+    .search-container-right{
+      width: 50%;
+      position: relative;
+      box-shadow: inset 1px 1px 2px hsla(230, 6%, 60%, .24), inset 2px 2px 8px hsla(230, 6%, 60%, .1);
     }
 
   </shadow-style>
