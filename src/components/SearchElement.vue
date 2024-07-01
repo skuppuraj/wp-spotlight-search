@@ -34,14 +34,17 @@
         </label>
         <div class="options-title">{{ translatedStrings.category_title }}</div>
         <div class="ul horiz-tabs">
-          <div  class="li" v-for="(category, index) in categories" :key="index">
+          <div class="li" v-for="(category, index) in categories" :key="index">
             
-            <label :key="index" @click="categoryClick(category.type)">
-                <input
-                :key="index"
-                :class="{ active: isAllCategory(category.type) }"
-                type="checkbox"
-              />{{ category.label }}
+            <input
+            :id="category.type"
+            :key="index"
+            type="checkbox"
+            :value="category.type"
+            v-model="activeCategories"
+            />
+            <label :key="index" :for="category.type">
+              {{ category.label }}
             </label>
           </div>
         </div>
@@ -152,6 +155,7 @@ export default {
       if (value.length >= 1) {
         this.resetNavigationIndex();
         this.finder(value);
+        console.log("activeCategories",this.activeCategories);
         if (value.length >= 3) {
           this.debounceSearch();
         }
