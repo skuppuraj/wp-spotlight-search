@@ -204,14 +204,14 @@ table {
     outline: 0;
     background: transparent;
 }
-#wpss-main-container ul.horiz-tabs {
+#wpss-main-container .ul.horiz-tabs {
     display: flex;
     margin: 8px 15px;
     flex-wrap: wrap;
     list-style-type: none; /* Remove bullets */
     padding: 0; /* Remove padding */
 }
-#wpss-main-container ul.horiz-tabs li {
+#wpss-main-container .ul.horiz-tabs .li {
     font-size: 11px;
     padding: 7px 10px;
     border-radius: 5px;
@@ -219,11 +219,11 @@ table {
     margin-bottom: 7px;
     text-transform: uppercase;
 }
-#wpss-main-container ul.horiz-tabs li.active,
-#wpss-main-container ul.horiz-tabs li:hover {
+#wpss-main-container .ul.horiz-tabs .li.active,
+#wpss-main-container .ul.horiz-tabs .li:hover {
     background-color: rgba(var(--accentClrRGB), 0.3);
 }
-#wpss-main-container ul.horiz-tabs li:not(:last-child) {
+#wpss-main-container .ul.horiz-tabs .li:not(:last-child) {
     margin-right: 7px;
 }
 #wpss-main-container .options-title {

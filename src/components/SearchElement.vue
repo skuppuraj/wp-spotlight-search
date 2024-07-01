@@ -33,16 +33,18 @@
           </div>
         </label>
         <div class="options-title">{{ translatedStrings.category_title }}</div>
-        <ul class="horiz-tabs">
-          <li
-            v-for="(category, index) in categories"
-            :key="index"
-            :class="{ active: isAllCategory(category.type) }"
-            @click="categoryClick(category.type)"
-          >
-            {{ category.label }}
-          </li>
-        </ul>
+        <div class="ul horiz-tabs">
+          <div  class="li" v-for="(category, index) in categories" :key="index">
+            
+            <label :key="index" @click="categoryClick(category.type)">
+                <input
+                :key="index"
+                :class="{ active: isAllCategory(category.type) }"
+                type="checkbox"
+              />{{ category.label }}
+            </label>
+          </div>
+        </div>
         <div class="search-container" ref="search_results">
           <div>
             <div
