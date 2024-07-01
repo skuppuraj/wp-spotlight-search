@@ -170,6 +170,7 @@ export default {
         if (this.search.length >= 3) {
           this.debounceSearch();
         }
+        this.saveChoosenCategory();
       },
       deep: true,
     },
