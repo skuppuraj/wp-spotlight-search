@@ -254,7 +254,7 @@ export default {
         this.finderResult.push(itemList);
         _.sortedIndex(this.finderResult);
       });
-      // console.log('finderResult',this.finderResult);
+      console.log('finderResult',this.finderResult);
     },
     triggerSearch() {
       const request = {

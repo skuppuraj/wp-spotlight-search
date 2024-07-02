@@ -3,6 +3,7 @@ namespace WP_SPOTLIGHT\Core;
 use WP_SPOTLIGHT\Module\Module;
 class SpotlightCore{
 	private $wpdb;
+	private $post_types;
 
 	public function __construct() {
 		global $wpdb;
@@ -21,15 +22,13 @@ class SpotlightCore{
 	
     public function get_searchabel_post_types(){
         $searchabel_post_type = array();
+		
+		$searchabel_post_type[] = array('type'=>'menu', 'label' => 'Menus');
 		if (current_user_can( 'manage_options')) {
-			$searchabel_post_type[] = array('type'=>'menu', 'label' => 'Menus');
 			$searchabel_post_type[] = array('type'=>'users', 'label' => 'Users');
 		}
 	    $post_types = $this->get_post_types();
 	    foreach ($post_types as $key => $post) { 
-            if ($key == 'attachment' || ($post->show_in_menu == false && $post->public == false)) {
-                continue;
-	        }
 			if (current_user_can('delete_'.$post->capability_type.'s') == false) {
 				continue;
 			}
@@ -157,7 +156,7 @@ class SpotlightCore{
 		global $wpdb;
 		$post_types = $this->get_post_types();
 		foreach ($post_types as $key => $post) {
-		    if (($category != "all" && $key != $category) || $key == 'attachment' || ($post->show_in_menu == false && $post->public == false)) {
+			if (($category != "all" && $key != $category)) {
 		        continue;
 		    }
 		    $post_temp = array();
@@ -169,19 +168,15 @@ class SpotlightCore{
 					$post_temp['type'] = $key;
 					$post_temp['category'] = $post->label;
 					$post_temp['ID'] = $content['ID']; 
+					$post_temp['more'] = array();
 					if (!empty($content['post_title'])) {
 						$post_temp['title'] = $content['post_title']; 
 					}
-					if ($key == 'shop_order') {
-						$meta = get_post_meta($content['ID']);
-						$_order_currency = $meta['_order_currency'][0];
-						$_order_total = $meta['_order_total'][0];
-						$post_temp['price'] = $_order_currency.' '.$_order_total;
-					}elseif($key == 'product'){
+					if($key == 'product'){
 						$meta = get_post_meta($content['ID']);
 						$_price = $meta['_price'][0];
 						$currency = get_option('woocommerce_currency');
-						$post_temp['price'] = $currency.' '.$_price;
+						$post_temp['more'][] = array('title' => 'Price', 'value' => $currency.' '.$_price);
 	
 					}else{
 						$meta = $this->get_post_meta( $content['ID'], $key );
@@ -306,7 +301,20 @@ class SpotlightCore{
 	}
 
 	public function get_post_types(){
-		return get_post_types('', 'object');
+		if (!empty($this->post_types)) {
+			return $this->post_types;
+		}
+		$post_types = get_post_types(array(), 'object');
+		foreach ($post_types as $key => $post) { 
+            if ($key == 'attachment' || ($post->show_in_menu == false && $post->public == false)) {
+               unset($post_types[$key]);
+	        }
+			if (current_user_can('delete_'.$post->capability_type.'s') == false) {
+				unset($post_types[$key]);
+			}
+	    }
+		$this->post_types = $post_types;
+		return $post_types;
 	}
 
 	public function get_menus(){
