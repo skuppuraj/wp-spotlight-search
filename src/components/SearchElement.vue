@@ -106,14 +106,22 @@
               <div class="search-container-right">
                   <ul v-if="finderResult[navigationIndex] && finderResult[navigationIndex].item && finderResult[navigationIndex].item.more" >
                     <li v-for="(rightItems, rIndex) in finderResult[navigationIndex].item.more" :key ="rIndex">
-                          <div>{{ rightItems.title }}</div>
-                          <div v-html="
-                          generateElementText(
-                            rightItems.value,
-                            finderResult[navigationIndex]['matches'],
-                            ['more']
-                          )
-                        "></div>
+                          <div class="more-options-title" v-if="rightItems.title" v-html="rightItems.title"></div>
+                          <div v-if="rightItems.actions">
+                              <div class="more-options-title">Actions</div>
+                              <div class="more-actions">
+                                <span v-for="(action, aKye) in rightItems.actions" :key="aKye">
+                                    <a :href="generateHref(action['url'])">{{ action.title }}</a>
+                                </span>
+                              </div>
+                          </div>
+                          <div v-if="rightItems.value" v-html="
+                            generateElementText(
+                              rightItems.value,
+                              finderResult[navigationIndex]['matches'],
+                              ['more']
+                            )
+                          "></div>
                       </li>
                   </ul>
               </div>

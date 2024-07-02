@@ -347,6 +347,17 @@
       border-bottom: 1px solid #e4e7ec;
     }
 
+    .search-container-right .more-actions{
+        display: flex;
+        margin: 10px 0px;
+    }
+    .search-container-right .more-options-title{
+        color: var(--grey500);
+    }
+    .search-container-right .more-actions span{ 
+        padding-right: 10px;
+    }
+
   </shadow-style>
 </template>
 

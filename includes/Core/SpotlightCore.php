@@ -240,6 +240,10 @@ class SpotlightCore{
 			$user_temp['parent'] = 'users';
 			$user_temp['url'] = add_query_arg( 'user_id', $value->data->ID, self_admin_url( 'user-edit.php' ) );
 			$user_temp['more'] = array();
+			$user_temp['more'][] = array('actions'=> array(
+				array('title' => 'Edit', 'url' => $user_temp['url'] ),
+				array('title' => 'View', 'url' => get_author_posts_url( $value->data->ID ) ),
+			));
 			$user_temp['more'][] = array('title'=> 'Role', 'value'=> $value->roles[0]);
 			$user_temp['more'][] = array('title'=> 'Email', 'value'=> $value->data->user_email);
 			$user_temp['more'][] = array('title'=> 'Display name', 'value'=> $value->data->display_name);
