@@ -104,6 +104,20 @@
                 </ul>
               </div>
               <div class="search-container-right">
+                  <div v-if="finderResult[navigationIndex] && finderResult[navigationIndex].item && finderResult[navigationIndex].item.more" >
+                    <div v-for="(rightItems, rIndex) in finderResult[navigationIndex].item.more" :key ="rIndex">
+                        <div>
+                          <span>{{ rightItems.title }}</span>
+                          <span v-html="
+                          generateElementText(
+                            rightItems.value,
+                            finderResult[navigationIndex]['matches'],
+                            ['more']
+                          )
+                        "></span>
+                        </div>
+                    </div>
+                  </div>
               </div>
             </div>
           </div>
@@ -234,7 +248,7 @@ export default {
         this.finderResult.push(itemList);
         _.sortedIndex(this.finderResult);
       });
-      console.log('finderResult',this.finderResult);
+      // console.log('finderResult',this.finderResult);
     },
     triggerSearch() {
       const request = {
@@ -279,7 +293,7 @@ export default {
     generateElementText(value, matches, type) {
       let matchIndex = {};
       let addIndice = 0;
-      matchIndex = _.find(matches, { key: type });
+      matchIndex = _.find(matches, { key: type, 'value': value });
       if (typeof matchIndex !== 'undefined') {
         _.forEach(matchIndex.indices, (indice) => {
           const addOne = 1;
