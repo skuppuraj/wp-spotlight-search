@@ -41,7 +41,7 @@ abstract class ActionCore extends Tracked {
 			@ob_end_clean();
 		}
 
-		echo json_encode( $out, JSON_FORCE_OBJECT );
+		echo json_encode( $out );
 		wp_die();
 	}
 

@@ -233,13 +233,18 @@ class SpotlightCore{
 		foreach ($users as $key => $value) {
 			$user_temp = array();
 			$user_temp['ID'] = $value->data->ID;
+			$meta = get_user_meta($value->data->ID);
 			$user_temp['title'] = $value->data->user_login;
-			$user_temp['role'] = $value->roles[0];
 			$user_temp['category'] = 'Users';
 			$user_temp['type'] = 'users';
 			$user_temp['parent'] = 'users';
-			$user_temp['email'] = $value->data->user_email;
 			$user_temp['url'] = add_query_arg( 'user_id', $value->data->ID, self_admin_url( 'user-edit.php' ) );
+			$user_temp['more'] = array();
+			$user_temp['more'][] = array('title'=> 'Role', 'value'=> $value->roles[0]);
+			$user_temp['more'][] = array('title'=> 'Email', 'value'=> $value->data->user_email);
+			$user_temp['more'][] = array('title'=> 'Display name', 'value'=> $value->data->display_name);
+			$user_temp['more'][] = array('title'=> 'Last name', 'value'=> $meta['last_name'][0]);
+			$user_temp['more'][] = array('title'=> 'First name', 'value'=> $meta['first_name'][0]);
 			array_push($user_results, $user_temp);
 		}
 		return $user_results;

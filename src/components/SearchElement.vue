@@ -132,10 +132,8 @@ export default {
       finderResult: [],
       searchOption: {
         keys: [
-          { name: 'title', weight: 0.1 },
-          { name: 'email', weight: 0.1 },
-          { name: 'ID', weight: 0.1 },
-          { name: 'role', weight: 0.1 },
+          { name: 'title', weight: 3 },
+          ['more','value']
         ],
         includeMatches: true,
         includeScore: true,
@@ -161,7 +159,6 @@ export default {
       if (value.length >= 1) {
         this.resetNavigationIndex();
         this.finder(value);
-        console.log("activeCategories",this.activeCategories);
         if (value.length >= 3) {
           this.debounceSearch();
         }
@@ -237,7 +234,7 @@ export default {
         this.finderResult.push(itemList);
         _.sortedIndex(this.finderResult);
       });
-      console.log(this.finderResult);
+      console.log('finderResult',this.finderResult);
     },
     triggerSearch() {
       const request = {
