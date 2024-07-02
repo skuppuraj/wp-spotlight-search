@@ -104,20 +104,18 @@
                 </ul>
               </div>
               <div class="search-container-right">
-                  <div v-if="finderResult[navigationIndex] && finderResult[navigationIndex].item && finderResult[navigationIndex].item.more" >
-                    <div v-for="(rightItems, rIndex) in finderResult[navigationIndex].item.more" :key ="rIndex">
-                        <div>
-                          <span>{{ rightItems.title }}</span>
-                          <span v-html="
+                  <ul v-if="finderResult[navigationIndex] && finderResult[navigationIndex].item && finderResult[navigationIndex].item.more" >
+                    <li v-for="(rightItems, rIndex) in finderResult[navigationIndex].item.more" :key ="rIndex">
+                          <div>{{ rightItems.title }}</div>
+                          <div v-html="
                           generateElementText(
                             rightItems.value,
                             finderResult[navigationIndex]['matches'],
                             ['more']
                           )
-                        "></span>
-                        </div>
-                    </div>
-                  </div>
+                        "></div>
+                      </li>
+                  </ul>
               </div>
             </div>
           </div>

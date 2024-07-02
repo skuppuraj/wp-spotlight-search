@@ -334,9 +334,17 @@
       width: 50%;
       position: relative;
       box-shadow: inset 1px 1px 2px hsla(230, 6%, 60%, .24), inset 2px 2px 8px hsla(230, 6%, 60%, .1);
-      background-color: rgba(245, 245, 250, .6);
       max-height: 60vh;
       overflow-y: auto;
+    }
+
+    .search-container-right ul li{
+      padding-top: 10px;
+      padding-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 20px;
+      border-bottom: 1px solid #e4e7ec;
     }
 
   </shadow-style>
