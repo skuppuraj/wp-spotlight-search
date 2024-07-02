@@ -239,7 +239,7 @@ class SpotlightCore{
 			$user_temp['type'] = 'users';
 			$user_temp['parent'] = 'users';
 			$user_temp['email'] = $value->data->user_email;
-			$user_temp['url'] = 'user-edit.php?user_id='.$value->data->ID.'&wp_http_referer=%2Fsftp%2Fw1%2Fwp-admin%2Fusers.php';
+			$user_temp['url'] = add_query_arg( 'user_id', $value->data->ID, self_admin_url( 'user-edit.php' ) );
 			array_push($user_results, $user_temp);
 		}
 		return $user_results;
