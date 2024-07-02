@@ -334,6 +334,7 @@
       width: 50%;
       position: relative;
       box-shadow: inset 1px 1px 2px hsla(230, 6%, 60%, .24), inset 2px 2px 8px hsla(230, 6%, 60%, .1);
+      background-color: rgba(245, 245, 250, .6)
     }
 
   </shadow-style>
