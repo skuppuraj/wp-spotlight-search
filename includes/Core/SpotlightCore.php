@@ -21,18 +21,23 @@ class SpotlightCore{
 	
     public function get_searchabel_post_types(){
         $searchabel_post_type = array();
-        $searchabel_post_type[] = array('type'=>'menu', 'label' => 'Menus');
+		if (current_user_can( 'manage_options')) {
+			$searchabel_post_type[] = array('type'=>'menu', 'label' => 'Menus');
+			$searchabel_post_type[] = array('type'=>'users', 'label' => 'Users');
+		}
 	    $post_types = $this->get_post_types();
 	    foreach ($post_types as $key => $post) { 
             if ($key == 'attachment' || ($post->show_in_menu == false && $post->public == false)) {
                 continue;
 	        }
+			if (current_user_can('delete_'.$post->capability_type.'s') == false) {
+				continue;
+			}
 	        $post_tmep = array();
 	        $post_tmep['type'] = $key;
 	        $post_tmep['label'] = $post->label;
 	        array_push($searchabel_post_type, $post_tmep);
 	    }
-        $searchabel_post_type[] = array('type'=>'users', 'label' => 'Users');
         $searchabel_post_type[] = array('type'=>'comments', 'label' => 'Comments');
 	    return $searchabel_post_type;
 	}
@@ -334,5 +339,17 @@ class SpotlightCore{
 			}
 		}
 		return $all_post_types;
+	}
+
+	public function current_user_can_multiple($capabilities) {
+	
+		// Check each capability
+		foreach ($capabilities as $capability) {
+			if (!current_user_can($capability)) {
+				return false;
+			}
+		}
+	
+		return true;
 	}
 }
