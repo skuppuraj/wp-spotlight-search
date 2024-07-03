@@ -117,9 +117,160 @@ class Main extends Singleton{
                   </div>
                 </div>
                 ';
+		$html = '<button id="wp_spotlight_search_box"
+    aria-label="Search"
+    class="DocSearch DocSearch-Button"
+    style="display: flex; justify-content: flex-start; align-items: center; margin: 0; height: auto; background: 0 0; border-radius: 40px; border: 0; padding: 0 8px; color: rgba(235, 235, 235, 0.6); font-weight: 500;    background: #1d2327;cursor: pointer;"
+    type="button"
+>
+    <span class="DocSearch-Button-Container" style="align-items: center; display: flex;">
+        <svg class="DocSearch-Search-Icon" height="20" viewBox="0 0 20 20" width="20" style="
+    margin-right: 10px;
+    width: 15px;
+    height: 15px;
+    color: #f0f0f1;
+    transition: color .5s;
+    fill: currentColor;
+    position: relative;
+    stroke-width: 1.6;    background: #1d2327;">
+            <path
+                d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z"
+                fill="none"
+                fill-rule="evenodd"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            ></path>
+        </svg>
+        <span class="DocSearch-Button-Placeholder" style="transition: color 0.5s; font-size: 13px; font-weight: 500; color: #f0f0f1; display: inline-block; padding: 0 10px 0 0;">WP Spotlight Search</span>
+    </span>
+    <span
+        class="DocSearch-Button-Keys"
+        style="
+            display: flex;
+            gap: 2px;
+            min-width: auto;
+            box-sizing: border-box;
+            border: 1px solid #f0f0f1;
+            border-radius: 4px;
+            padding: 0 6px;
+            font-family: inherit;
+            font-size: 12px;
+            height: 20px;
+            line-height: 22px;
+            font-weight: 500;
+            transition: color 0.5s, border-color 0.5s;
+        "
+    >
+        <kbd
+            class="DocSearch-Button-Key"
+            style="
+                display: flex;
+                width: auto;
+                min-width: auto;
+                font-family: inherit;
+                font-size: 12px;
+                height: 20px;
+                padding: 0;
+                margin: 0;
+                color: #f0f0f1;
+                transition: color 0.5s;
+                background:  transparent;
+                border-radius: 3px;
+                box-shadow: none;
+                justify-content: center;
+                position: relative;
+                border: 0;
+                top: -5px;
+            "
+        >
+            ⌘
+        </kbd>
+        <kbd class="DocSearch-Button-Key" style=" display: flex;
+                width: auto;
+                min-width: auto;
+                font-family: inherit;
+                font-size: 12px;
+                height: 20px;
+                padding: 0;
+                margin: 0;
+                color: #f0f0f1;
+                transition: color 0.5s;
+                background:  transparent;
+                border-radius: 3px;
+                box-shadow: none;
+                justify-content: center;
+                position: relative;
+                border: 0;
+                top: -5px;">K</kbd>
+    </span>
+	<span class="DocSearch-Button-Placeholder" style="transition: color 0.5s; font-size: 13px; font-weight: 500; color: #f0f0f1; display: inline-block; padding: 0 10px 0 10px;">Or</span>
+	<span
+        class="DocSearch-Button-Keys"
+        style="
+            display: flex;
+            gap: 2px;
+            min-width: auto;
+            box-sizing: border-box;
+            border: 1px solid #f0f0f1;
+            border-radius: 4px;
+            padding: 0 6px;
+            font-family: inherit;
+            font-size: 12px;
+            height: 20px;
+            line-height: 22px;
+            font-weight: 500;
+            transition: color 0.5s, border-color 0.5s;
+        "
+    >
+        <kbd
+            class="DocSearch-Button-Key"
+            style="
+                display: flex;
+                width: auto;
+                min-width: auto;
+                font-family: inherit;
+                font-size: 12px;
+                height: 20px;
+                padding: 0;
+                margin: 0;
+                color: #f0f0f1;
+                transition: color 0.5s;
+                background:  transparent;
+                border-radius: 3px;
+                box-shadow: none;
+                justify-content: center;
+                position: relative;
+                border: 0;
+                top: -5px;
+            "
+        >
+        ^
+        </kbd>
+        <kbd class="DocSearch-Button-Key" style=" display: flex;
+                width: auto;
+                min-width: auto;
+                font-family: inherit;
+                font-size: 12px;
+                height: 20px;
+                padding: 0;
+                margin: 0;
+                color: #f0f0f1;
+                transition: color 0.5s;
+                background:  transparent;
+                border-radius: 3px;
+                box-shadow: none;
+                justify-content: center;
+                position: relative;
+                border: 0;
+                top: -5px;">K</kbd>
+    </span>
+</button>
+';
+
         $wp_admin_bar->add_menu( array(
             'id'    => 'wp-spotlight-search',
-            'title' => $form,
+            'title' => $html,
             'meta'  => array(
                 'title' => __('WP Spotlight')            
             ),
