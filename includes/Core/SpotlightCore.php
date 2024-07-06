@@ -281,7 +281,7 @@ class SpotlightCore{
 		$elements = array();
 		$elements['search_place_holder'] = esc_html__( 'Search for anything', 'wp-spotlight-search' );
 		$elements['help_text_cmd'] = esc_html__( 'or enter / for command list', 'wp-spotlight-search' );
-		$elements['help_text_navigation'] = esc_html__( 'Navigate using ↑↓ arrow keys • Hit Enter to apply', 'wp-spotlight-search' );
+		$elements['help_text_navigation'] = esc_html__( 'Navigate using ↑↓ arrow keys • Hit Enter to apply • esc to close', 'wp-spotlight-search' );
 		$elements['category_title'] = esc_html__( 'Search In', 'wp-spotlight-search' );
 		$elements['admin_category_title'] = esc_html__( 'Admin Menu Navigation', 'wp-spotlight-search' );
 		$elements['commands_title'] = esc_html__( 'Comments', 'wp-spotlight-search' );

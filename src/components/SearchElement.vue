@@ -25,10 +25,7 @@
             v-show="search"
             :title="translatedStrings.clear_title"
           ></a>
-          <div class="search-help-text cmd" v-show="!search">
-            {{ translatedStrings.help_text_cmd }}
-          </div>
-          <div class="search-help-text" v-show="search">
+          <div class="search-help-text" >
             {{ translatedStrings.help_text_navigation }}
           </div>
         </label>
