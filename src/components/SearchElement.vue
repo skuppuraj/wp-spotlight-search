@@ -61,6 +61,12 @@
             >
               Recent searches
             </div>
+            <div
+              class="options-title"
+              v-else
+            >
+              Search Results
+            </div>
             <div class="search-result-wrapper">
               <div v-if="finderResult.length == 0" class="no-result"><svg viewBox="0 0 20 20" fill="none" class="stroke-icon"><path d="M15.5 4.8c2 3 1.7 7-1 9.7h0l4.3 4.3-4.3-4.3a7.8 7.8 0 01-9.8 1m-2.2-2.2A7.8 7.8 0 0113.2 2.4M2 18L18 2"></path></svg><h2 class="text-xl">No results for <strong>"{{ search }}"</strong>.</h2></div>
               <div class="search-container-left" v-if="finderResult.length > 0">
