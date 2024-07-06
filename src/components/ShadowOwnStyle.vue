@@ -371,12 +371,12 @@
         width: 20px;
     }
     .enter-icon{
-        color: #fff;
+        color: var(--white50);
+        height: 15px;
+        width: 15px;
+        margin-left: 3px;
     }
-    <!-- .arrow-section{
-        display: flex;
-        flex-direction: row-reverse;
-    } -->
+   
     .no-result{
         display: flex;
         flex-direction: column;
@@ -390,6 +390,10 @@
         color: var(--grey500);
         height: 40px;
         flex-shrink: 0;
+    }
+    .option-wrapper{
+        display: flex;
+        align-items:center;
     }
   </shadow-style>
 </template>

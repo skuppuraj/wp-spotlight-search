@@ -91,25 +91,27 @@
                           )
                         "
                       ></div>
-                      <div
-                        class="option-desc"
-                        v-if="items['item']['type'] == 'menu'"
-                        v-html="
-                          generateElementText(
-                            items['item']['parent'],
-                            items['matches'],
-                            'parent'
-                          )
-                        "
-                      ></div>
-                      <div
-                        class="option-desc"
-                        v-if="items['item']['type'] != 'menu'"
-                        v-html="items['item']['category']"
-                      ></div>
+                      <div class="option-wrapper">
+                        <div
+                          class="option-desc"
+                          v-if="items['item']['type'] == 'menu'"
+                          v-html="
+                            generateElementText(
+                              items['item']['parent'],
+                              items['matches'],
+                              'parent'
+                            )
+                          "
+                        ></div>
+                        <div
+                          class="option-desc"
+                          v-if="items['item']['type'] != 'menu'"
+                          v-html="items['item']['category']"
+                        ></div>
+                        <span class="enter-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="block h-auto w-16"><polyline points="9 10 4 15 9 20"></polyline><path d="M20 4v7a4 4 0 0 1-4 4H4"></path></svg></span>
+                      </div>
                     </a>
                     <div class="arrow-section">
-                      <div class="enter-icon"></div>
                     </div>
                   </li>
                 </ul>
