@@ -298,6 +298,7 @@
         color: var(--grey500);
         margin-top: 10px;
         display: flex;
+        align-items:center;
     }
     #wpss-main-container .footer a {
         padding: 5px;
