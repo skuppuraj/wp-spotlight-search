@@ -357,6 +357,13 @@
     .search-container-right .more-actions span{ 
         padding-right: 10px;
     }
+    .search-box-wrapper{
+        display: flex;
+    }
+    .search-box-wrapper .search-icon{
+        height: 20px;
+        padding: 0px 10px 0px 0px;
+    }
 
   </shadow-style>
 </template>

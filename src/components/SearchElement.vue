@@ -4,19 +4,21 @@
       <shadow-own-style></shadow-own-style>
       <div id="wpss-main-container">
         <label for="search-box">
-          <div class="search-icon"></div>
-          <input
-            id="search-box"
-            type="text"
-            class=""
-            :placeholder="translatedStrings.search_place_holder"
-            v-model="search"
-            ref="search"
-            @keydown.up.prevent="highlightPrevious"
-            @keydown.down.prevent="highlightNext"
-            @keydown.enter.prevent="openLink"
-            @keydown.esc.prevent="closeModal"
-          />
+          <div class="search-box-wrapper">
+            <svg viewBox="0 0 20 20" fill="currentColor" class="search-icon"><path d="M19.71,18.29,16,14.61A9,9,0,1,0,14.61,16l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,19.71,18.29ZM2,9a7,7,0,1,1,12,4.93h0s0,0,0,0A7,7,0,0,1,2,9Z"></path></svg>
+            <input
+              id="search-box"
+              type="text"
+              class=""
+              :placeholder="translatedStrings.search_place_holder"
+              v-model="search"
+              ref="search"
+              @keydown.up.prevent="highlightPrevious"
+              @keydown.down.prevent="highlightNext"
+              @keydown.enter.prevent="openLink"
+              @keydown.esc.prevent="closeModal"
+            />
+          </div>
           <span class="cmd-tag" style="display: none">{{
             translatedStrings.commands_title
           }}</span>
