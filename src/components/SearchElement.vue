@@ -103,7 +103,6 @@
                     </a>
                     <div class="arrow-section">
                       <div class="enter-icon"></div>
-                      <div class="right-arrow"></div>
                     </div>
                   </li>
                 </ul>
@@ -158,6 +157,7 @@ export default {
       searchOption: {
         keys: [
           { name: 'title', weight: 3 },
+          { name: 'parent', weight: 3 },
           ['more','value']
         ],
         includeMatches: true,

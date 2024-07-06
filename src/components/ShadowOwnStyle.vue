@@ -368,6 +368,13 @@
         height: 20px;
         width: 20px;
     }
+    .enter-icon{
+        color: #fff;
+    }
+    <!-- .arrow-section{
+        display: flex;
+        flex-direction: row-reverse;
+    } -->
 
   </shadow-style>
 </template>
