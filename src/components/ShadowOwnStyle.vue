@@ -364,6 +364,10 @@
         height: 20px;
         padding: 0px 10px 0px 0px;
     }
+    .search-box-wrapper .loading{
+        height: 20px;
+        width: 20px;
+    }
 
   </shadow-style>
 </template>
