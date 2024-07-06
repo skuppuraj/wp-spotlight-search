@@ -323,6 +323,7 @@
     }
     .search-result-wrapper{
       display: flex;
+      justify-content: center;
     }
     .search-container-left{
       width: 50%;
@@ -376,7 +377,20 @@
         display: flex;
         flex-direction: row-reverse;
     } -->
-
+    .no-result{
+        display: flex;
+        flex-direction: column;
+        padding-left: 32px;
+        padding-right: 32px;
+        justify-content: center;
+        height: 300px;
+    }
+    .stroke-icon{
+        stroke: currentColor;
+        color: var(--grey500);
+        height: 40px;
+        flex-shrink: 0;
+    }
   </shadow-style>
 </template>
 
