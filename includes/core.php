@@ -207,6 +207,12 @@ class WP_Spotlight_Core{
 	}
 
 	public static function wp_spotlight_save_settings($data){
+		if (empty($data)) {
+			return;
+		}
+		if ( ! isset( $data['_wpnonce'] ) || ! wp_verify_nonce( $data['_wpnonce'], 'wp_spotlight' ) ) {
+			wp_die( 'Security check failed' );
+		}
 	    if (empty($data['search_include_options']) && empty($data['submit'])) {
 	        return false;
 	    }

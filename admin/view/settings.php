@@ -49,6 +49,7 @@
 				</td>
 			</tr>
 		</table>
+		<?php wp_nonce_field( 'wp_spotlight' ); ?>
 		<input type="submit" name="submit" id="submit" class="button button-primary" value="Save Changes">
 	</form>
 </div>

@@ -2,7 +2,7 @@
 Contributors: rajkuppus
 Tags: admin search, ajax search, menu search, dashboard, wp-admin, wp admin dashboard,custom menu search, Manage WordPress, WordPress manager, dashboard search, quick search, fast search
 Requires at least: 3.1
-Tested up to: 5.7.2
+Tested up to: 6.8.1
 Stable tag: trunk
 
 Advanced All in One Admin Search by WP Spotlight Global Search is a powerful quick navigation plugin for WordPress Dashboard - it is an advancement of the default WordPress dashboard search.
@@ -41,6 +41,9 @@ All you have to do is check the option to make it searchable.
 6. User search 
 
 == Changelog ==
+
+= 1.1.2  - 15th May 2025 =
+* Fix: Security update
 
 = 1.1.1  - 8th April 2021 =
 * Fix: undefined variable $admin_is_parent. (Thanks a tonne to @theprinze for reporting)
