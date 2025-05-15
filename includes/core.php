@@ -17,7 +17,7 @@ class WP_Spotlight_Core{
 	        if ($wp_spotlight_settings != false && in_array($type, $wp_spotlight_settings)) {
 	            $selected = 'checked';
 	        }
-	        $response .= "<label class='wp-spotlight-settings-checkbox'> <input type='checkbox' value='".$type."' name='search_include_options[]' $selected /> $label </label> <br>";
+	        $response .= "<label class='wp-spotlight-settings-checkbox'> <input type='checkbox' value='".esc_attr($type)."' name='search_include_options[]' $selected /> $label </label> <br>";
 	    }
 
 	    return $response;

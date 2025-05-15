@@ -57,7 +57,7 @@ class WP_Spotlight {
         add_action( 'admin_menu', array($this, 'wp_spotlight_menu'));
         add_action( 'admin_enqueue_scripts', array($this, 'wp_spotlight_enqueue') );
         add_action( 'wp_before_admin_bar_render', array($this, 'wp_soptlight_add_toolbar_items'), 999999999);
-        add_action( 'admin_footer', array($this, 'send_source_to_admin'), 999999999);
+        add_action( 'admin_footer', array($this, 'send_source_to_admin'), PHP_INT_MAX);// Need to load last 
         add_action( 'admin_init', array($this, 'setting_page_redirect_on_activation') );
     }
 
@@ -128,18 +128,14 @@ class WP_Spotlight {
 
     }
 
-    public function send_source_to_admin(){
+   public function send_source_to_admin() {
         $data = WP_Spotlight_Core::get_search_content();
 
-        ob_start()
         ?>
         <script type="text/javascript">
-            var wp_spotlight_full_menu = <?php echo json_encode($data)?>;
+            var wp_spotlight_full_menu = <?php echo wp_json_encode($data); ?>;
         </script>
         <?php
-
-        $content = ob_get_clean();
-        print $content;
     }
 
     public function add_setting_button_plugin_row($links, $file){
