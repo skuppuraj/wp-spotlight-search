@@ -44,7 +44,7 @@ class WP_Spotlight_Core{
 	        return false;
 	    }
 
-	    return unserialize($wp_spotlight_setting);
+	    return unserialize($wp_spotlight_setting, ['allowed_classes' => false]);
 
 	}
 
@@ -220,7 +220,7 @@ class WP_Spotlight_Core{
 	        delete_option('wp_spotlight_setting');
 	        return true;
 	    }
-	    $settings['search_include_options'] = $data['search_include_options'];
+	    $settings['search_include_options'] = sanitize_text_field($data['search_include_options']);
 	    update_option('wp_spotlight_setting', serialize($settings));
 	     ?>
 	    <div class="notice notice-success is-dismissible">
